@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
         //printf("method2 drandcur1=%g, drandcur2=%g\n", drandcur1, drandcur2);
         
         sum1 += drandcur2;
-        printf("method2 sum=%g\n",sum);
+        printf("method2 sum=%g\n",sum1);
     } 
     result1 = sum1 / nloops;
   }
