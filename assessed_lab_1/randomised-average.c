@@ -65,8 +65,8 @@ int main(int argc, char *argv[]) {
 //   result1 = sum1 / nloops;
 
   for (jloops = 0; jloops < nloops; jloops++) {
-    drandcur1 = drand48()**2; // random number between 0,1
-    sum1 += drandcur1;
+    drandcur1 = drand48(); // random number between 0,1
+    sum1 += drandcur1 * drandcur1;
   } 
   result1 = sum1 / nloops;
 
