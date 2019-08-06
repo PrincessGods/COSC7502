@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 /* method 2 drand48() generation (uses long int seed)
  * ** man drand48 **
  * for more information about (lack of) thread safety */
-  double drandcur1, sum1, result1;
+  double drandcur1, drandcur2, sum1, result1;
   long int iseedlong;
 
   printf("method2 using drand48() \n");
