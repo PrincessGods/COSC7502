@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
     #pragma omp for
     for (jloops = 0; jloops < nloops; jloops++) {
         drandcur1 = pow(drand48(), 2); // random number between 0,1
-        printf("method2 result1=%g, num=%d\n, jloops=%d", drandcur1, num, jloops);
+        printf("method2 result1=%g, num=%d, jloops=%d\n", drandcur1, num, jloops);
         psum += drandcur1;
     } 
 
