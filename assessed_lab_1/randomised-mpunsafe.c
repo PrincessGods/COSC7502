@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
   sum1 = 0;
   double psum = 0;
   //int num;
-  #pragma omp parallel private(drandcur1, psum, num)
+  #pragma omp parallel private(drandcur1, psum)
   {
     //num = omp_get_thread_num();
     #pragma omp for
