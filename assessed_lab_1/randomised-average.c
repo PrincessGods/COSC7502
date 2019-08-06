@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
   double drandcur1,drandcur2;
   long int iseedlong;
 
-  printf("method2 using drand48()\n");
+  printf("method2 using drand48() \n");
   iseedlong = (long int) iseed;
   srand48(iseedlong);
   for (jloops = 0; jloops < nloops; jloops++) {
