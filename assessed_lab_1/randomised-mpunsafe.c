@@ -73,6 +73,7 @@ int main(int argc, char *argv[]) {
     }
 
   }
+  printf("method2 sum1=%g\n",sum1);
   result1 = sum1 / nloops;
 
   printf("method2 result1=%g\n",result1);
