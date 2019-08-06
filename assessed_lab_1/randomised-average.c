@@ -55,19 +55,20 @@ int main(int argc, char *argv[]) {
 
   printf("method2 using drand48() \n");
   iseedlong = (long int) iseed;
-  sum1 = 0;
   srand48(iseedlong);
-  for (jloops = 0; jloops < nloops; jloops++) {
-    drandcur1 = drand48(); // random number between 0,1
-    sum1 += drandcur1;
-  } 
-  result1 = sum1 / nloops;
+  sum1 = 0;
 
 //   for (jloops = 0; jloops < nloops; jloops++) {
-//     drandcur1 = drand48() * drand48(); // random number between 0,1
+//     drandcur1 = drand48(); // random number between 0,1
 //     sum1 += drandcur1;
 //   } 
 //   result1 = sum1 / nloops;
+
+  for (jloops = 0; jloops < nloops; jloops++) {
+    drandcur1 = drand48()**2; // random number between 0,1
+    sum1 += drandcur1;
+  } 
+  result1 = sum1 / nloops;
 
   printf("method2 result1=%g\n",result1);
 
