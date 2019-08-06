@@ -21,8 +21,8 @@ int main(int argc, char *argv[]) {
 
   int jloops;
 
-  int irandcur;
-  double drandcur;
+  //int irandcur;
+  //double drandcur;
 
   if (argc != 3) {
     fprintf(stderr, "Usage: %s <iseed> <nloops>\n", argv[0]);
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
   } 
   result1 = sum1 / nloops;
 
-  printf("method2 result1=%g, drandcur2=%g,\n",result1);
+  printf("method2 result1=%g\n",result1);
 
   exit(EXIT_SUCCESS);
 }
