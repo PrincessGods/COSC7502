@@ -55,13 +55,13 @@ int main(int argc, char *argv[]) {
   long int iseedlong;
 
   printf("method2 using drand48() \n");
-  iseedlong = (long int) iseed;
-  srand48(iseedlong);
   sum1 = 0;
   double psum = 0;
   int num;
-  #pragma omp parallel private(drandcur1, psum, num, jloops)
-  {
+  #pragma omp parallel private(iseedlong, drandcur1, psum, num, jloops)
+  { 
+    iseedlong = (long int) iseed;
+    srand48(iseedlong);
     num = omp_get_thread_num();
     #pragma omp for
     for (jloops = 0; jloops < nloops; jloops++) {
