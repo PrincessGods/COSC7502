@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
     #pragma omp for reduction(+:sum1)
     for (jloops = 0; jloops < nloops; jloops++) {
         drandcur1 = pow(drand48(), 2); // random number between 0,1
-        sum1 += drandcur2;
+        sum1 += drandcur1;
     } 
     result1 = sum1 / nloops;
   }
