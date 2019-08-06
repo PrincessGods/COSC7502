@@ -61,9 +61,9 @@ int main(int argc, char *argv[]) {
   {
     #pragma omp for reduction(+:sum1)
     for (jloops = 0; jloops < nloops; jloops++) {
-        drandcur1 = drand48(); // random number between 0,1
+        drandcur1 = pow((double)drand48(), 2); // random number between 0,1
         //printf("method2 result1=%g\n",drandcur1);
-        sum1 += pow(drandcur1, 2);
+        sum1 += drandcur1;
     } 
   }
   result1 = sum1 / nloops;
