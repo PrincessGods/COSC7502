@@ -67,7 +67,8 @@ int main(int argc, char *argv[]) {
     } 
 
     #pragma omp critical
-    {
+    {   
+        printf("method2 psum=%g\n",psum);
         sum1 += psum;
     }
 
