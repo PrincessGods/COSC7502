@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
   iseedlong = (long int) iseed;
   srand48(iseedlong);
   sum1 = 0;
-  #pragma omp parallel //private(jloops)
+  #pragma omp parallel private(jloops)
   {
     #pragma omp for reduction(+:sum1)
     for (jloops = 0; jloops < nloops; jloops++) {
