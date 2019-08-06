@@ -58,8 +58,8 @@ int main(int argc, char *argv[]) {
   srand48(iseedlong);
   for (jloops = 0; jloops < nloops; jloops++) {
     drandcur1 = drand48(); // random number between 0,1
-    drandcur2 = drand48(); // random number between 0,1
-    printf("method2 drandcur1=%g, drandcur2=%g,\n",drandcur1,drandcur2);
+    //drandcur2 = drand48(); // random number between 0,1
+    printf("method2 drandcur1=%g, drandcur2=%g,\n",drandcur1);
   }
 
   exit(EXIT_SUCCESS);
