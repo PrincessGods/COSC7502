@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <omp.h>
 
 int main(int argc, char *argv[]) {
   unsigned int iseed;  /* input 1 random number seed */
@@ -58,13 +59,14 @@ int main(int argc, char *argv[]) {
   srand48(iseedlong);
   sum1 = 0;
   double psum = 0;
-  #pragma omp parallel private(psum)
+  int num;
+  #pragma omp parallel private(psum, num)
   {
-    
+    num = omp_get_thread_num();
     #pragma omp for
     for (jloops = 0; jloops < nloops; jloops++) {
         drandcur1 = pow(drand48(), 2); // random number between 0,1
-        printf("method2 result1=%g, num=%d\n", drandcur1, omp_get_thread_num());
+        printf("method2 result1=%g, num=%d\n", drandcur1);
         psum += drandcur1;
     } 
 
