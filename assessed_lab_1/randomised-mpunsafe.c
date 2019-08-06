@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
   sum1 = 0;
   #pragma omp parallel private(jloops)
   {
-    #pragma omp for reduction(+:sum1)
+    #pragma omp for
     for (jloops = 0; jloops < nloops; jloops++) {
         drandcur1 = drand48(); // random number between 0,1
         drandcur2 = drandcur1 * drandcur1;
