@@ -60,13 +60,13 @@ int main(int argc, char *argv[]) {
   sum1 = 0;
   double psum = 0;
   int num;
-  #pragma omp parallel private(psum, num) shared(drandcur1)
+  #pragma omp parallel private(drandcur1, psum, num)
   {
     num = omp_get_thread_num();
     #pragma omp for
     for (jloops = 0; jloops < nloops; jloops++) {
         drandcur1 = pow(drand48(), 2); // random number between 0,1
-        printf("method2 result1=%g, num=%d\n", drandcur1, num);
+        //printf("method2 result1=%g, num=%d\n", drandcur1, num);
         psum += drandcur1;
     } 
 
