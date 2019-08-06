@@ -64,8 +64,8 @@ int main(int argc, char *argv[]) {
         drandcur1 = pow(drand48(), 2); // random number between 0,1
         sum1 += drandcur1;
     } 
-    result1 = sum1 / nloops;
   }
+  result1 = sum1 / nloops;
 
   printf("method2 result1=%g\n",result1);
 
