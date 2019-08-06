@@ -57,9 +57,10 @@ int main(int argc, char *argv[]) {
   iseedlong = (long int) iseed;
   srand48(iseedlong);
   sum1 = 0;
-  #pragma omp parallel
+  double psum = 0;
+  #pragma omp parallel private(psum)
   {
-    double psum = 0;
+    
     #pragma omp for
     for (jloops = 0; jloops < nloops; jloops++) {
         drandcur1 = pow(drand48(), 2); // random number between 0,1
@@ -68,12 +69,10 @@ int main(int argc, char *argv[]) {
 
     #pragma omp critical
     {   
-        printf("method2 psum=%g\n",psum);
         sum1 += psum;
     }
 
   }
-  printf("method2 sum1=%g\n",sum1);
   result1 = sum1 / nloops;
 
   printf("method2 result1=%g\n",result1);
