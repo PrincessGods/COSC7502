@@ -68,6 +68,7 @@ int main(int argc, char *argv[]) {
         sum1 += drandcur2;
         printf("method2 sum=%g\n",sum1);
     } 
+    printf("method2 sum1=%g\n",sum1);
     result1 = sum1 / nloops;
   }
 
