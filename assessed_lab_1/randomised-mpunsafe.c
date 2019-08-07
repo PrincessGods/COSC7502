@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
   sum1 = 0;
   psum = 0;
   
-  #pragma omp parallel
+  #pragma omp parallel private(num)
   {
     num = omp_get_thread_num();
     #pragma omp for

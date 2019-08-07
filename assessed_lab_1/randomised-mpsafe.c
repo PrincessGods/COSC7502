@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
   
   sum = 0;
   psum = 0;
-  #pragma omp parallel
+  #pragma omp parallel private(num)
   {
     num = omp_get_thread_num();
     iseedlong = (long int) iseed + num;
