@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 /* method 2 drand48() generation (uses long int seed)
  * ** man drand48 **
  * for more information about (lack of) thread safety */
-  double drandcur1, sum1, result1;
+  double drandcur1, sum1, psum, result1;
   long int iseedlong;
 
   printf("method2 using drand48() \n");
@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
   sum1 = 0;
   double psum = 0;
   int num;
-  #pragma omp parallel private(iseedlong, drandcur1, psum, num, jloops)
+  #pragma omp parallel
   {
     num = omp_get_thread_num();
     #pragma omp for
