@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
   printf("method2 using drand48() \n");
   
   sum = 0;
-  #pragma omp parallel private(num, x)
+  #pragma omp parallel private(num, x,iseedlong)
   {
     num = omp_get_thread_num();
     iseedlong = (long int) iseed + num;
