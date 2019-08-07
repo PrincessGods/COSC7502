@@ -51,10 +51,9 @@ int main(int argc, char *argv[]) {
 /* method 2 drand48() generation (uses long int seed)
  * ** man drand48 **
  * for more information about (lack of) thread safety */
-  double drandcur, sum, psum, result;
+  double x, drandcur, sum, psum, result;
   long int iseedlong;
   int num;
-  double x;
   struct drand48_data randBuffer;
 
   printf("method2 using drand48() \n");
