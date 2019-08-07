@@ -54,6 +54,8 @@ int main(int argc, char *argv[]) {
   double drandcur, sum, psum, result;
   long int iseedlong;
   int num;
+  double x;
+  struct drand48_data randBuffer;
 
   printf("method2 using drand48() \n");
   
@@ -63,11 +65,12 @@ int main(int argc, char *argv[]) {
   {
     num = omp_get_thread_num();
     iseedlong = (long int) iseed + num;
-    srand48_r(iseedlong);
+    srand48_r(iseedlong, &randBuffer);
     
     #pragma omp for
     for (jloops = 0; jloops < nloops; jloops++) {
-        drandcur = pow(drand48_r(), 2); // random number between 0,1
+        drand48_r(&randBuffer, &x); // random number between 0,1
+        drandcur = pow(x, 2);
         printf("method2 result=%g, num=%d, jloops=%d\n", drandcur, num, jloops);
         psum += drandcur;
     } 
