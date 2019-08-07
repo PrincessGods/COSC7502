@@ -53,13 +53,14 @@ int main(int argc, char *argv[]) {
  * for more information about (lack of) thread safety */
   double drandcur1, sum1, psum, result1;
   long int iseedlong;
+  int num;
 
   printf("method2 using drand48() \n");
   iseedlong = (long int) iseed;
   srand48(iseedlong);
   sum1 = 0;
-  double psum = 0;
-  int num;
+  psum = 0;
+  
   #pragma omp parallel
   {
     num = omp_get_thread_num();
