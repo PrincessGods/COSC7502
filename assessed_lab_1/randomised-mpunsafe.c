@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 /* method 2 drand48() generation (uses long int seed)
  * ** man drand48 **
  * for more information about (lack of) thread safety */
-  double drandcur1, sum1, psum, result1;
+  double drandcur1, sum1, result1;
   long int iseedlong;
   int num;
 
@@ -68,13 +68,13 @@ int main(int argc, char *argv[]) {
     for (jloops = 0; jloops < nloops; jloops++) {
         drandcur1 = pow(drand48(), 2); // random number between 0,1
         printf("method2 result1=%g, num=%d, jloops=%d\n", drandcur1, num, jloops);
-        psum += drandcur1;
+        #pragma omp critical
+        {   
+          sum1 += drandcur1;
+        }
     } 
 
-    #pragma omp critical
-    {   
-        sum1 += psum;
-    }
+    
 
   }
   result1 = sum1 / nloops;
