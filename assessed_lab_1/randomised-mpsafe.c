@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
     for (jloops = 0; jloops < nloops; jloops++) {
         drandcur = pow(drand48_r(), 2); // random number between 0,1
         printf("method2 result=%g, num=%d, jloops=%d\n", drandcur, num, jloops);
-        psum += drandcur1;
+        psum += drandcur;
     } 
 
     #pragma omp critical
