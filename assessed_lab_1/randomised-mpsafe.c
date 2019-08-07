@@ -51,34 +51,31 @@ int main(int argc, char *argv[]) {
 /* method 2 drand48() generation (uses long int seed)
  * ** man drand48 **
  * for more information about (lack of) thread safety */
-  double x, drandcur, sum, psum, result;
+  double x, drandcur, sum, result;
   long int iseedlong;
   int num;
-  struct drand48_data randBuffer;
 
   printf("method2 using drand48() \n");
   
   sum = 0;
-  psum = 0;
   #pragma omp parallel private(num)
   {
     num = omp_get_thread_num();
     iseedlong = (long int) iseed + num;
-    srand48_r(iseedlong, &randBuffer);
+
+    struct drand48_data* randBuffer = malloc(sizeof(struct drand48_data));
+    srand48_r(iseedlong, randBuffer);
     
     #pragma omp for
     for (jloops = 0; jloops < nloops; jloops++) {
-        drand48_r(&randBuffer, &x); // random number between 0,1
+        drand48_r(randBuffer, &x); // random number between 0,1
         drandcur = pow(x, 2);
         //printf("method2 drandcur=%g, num=%d, jloops=%d\n", drandcur, num, jloops);
-        psum += drandcur;
+        #pragma omp critical
+        {   
+            sum += drandcur;
+        }
     } 
-
-    #pragma omp critical
-    {   
-        sum += psum;
-    }
-
   }
   result = sum / nloops;
 
