@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
     for (jloops = 0; jloops < nloops; jloops++) {
         drand48_r(&randBuffer, &x); // random number between 0,1
         drandcur = pow(x, 2);
-        printf("method2 result=%g, num=%d, jloops=%d\n", drandcur, num, jloops);
+        printf("method2 drandcur=%g, num=%d, jloops=%d\n", drandcur, num, jloops);
         psum += drandcur;
     } 
 
