@@ -53,7 +53,6 @@ int main(int argc, char *argv[]) {
  * for more information about (lack of) thread safety */
   double drandcur1, sum1, result1;
   long int iseedlong;
-  int num;
 
   printf("method2 using drand48() \n");
   iseedlong = (long int) iseed;
@@ -66,7 +65,6 @@ int main(int argc, char *argv[]) {
     #pragma omp for
     for (jloops = 0; jloops < nloops; jloops++) {
         drandcur1 = pow(drand48(), 2); // random number between 0,1
-        //printf("method2 result1=%g, num=%d, jloops=%d\n", drandcur1, num, jloops);
         #pragma omp critical
         {   
           sum1 += drandcur1;
