@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
   srand48(iseedlong);
   sum1 = 0;
   
-  #pragma omp parallel private(num)
+  #pragma omp parallel private(num, drandcur1)
   {
     num = omp_get_thread_num();
     #pragma omp for
