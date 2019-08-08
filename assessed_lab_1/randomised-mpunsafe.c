@@ -61,7 +61,6 @@ int main(int argc, char *argv[]) {
   
   #pragma omp parallel private(drandcur1)
   {
-    num = omp_get_thread_num();
     #pragma omp for
     for (jloops = 0; jloops < nloops; jloops++) {
         drandcur1 = pow(drand48(), 2); // random number between 0,1
