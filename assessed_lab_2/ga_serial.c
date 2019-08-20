@@ -93,9 +93,7 @@ int assess_fitness(int* indiv, int prob_size) {
     int sum = 0;
 
     while(count <= prob_size){
-        if(&indiv == 1){
-            sum ++;
-        }
+        sum += indiv[prob_size + count];
         count ++;
     }
     
