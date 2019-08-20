@@ -1,0 +1,16 @@
+time started  201908061212
+Hello from thread 6 of 10 at time 1565057549 
+Hello from thread 1 of 10 at time 1565057549 
+Hello from thread 0 of 10 at time 1565057549 
+Hello from thread 8 of 10 at time 1565057549 
+Hello from thread 7 of 10 at time 1565057549 
+Hello from thread 5 of 10 at time 1565057549 
+Hello from thread 2 of 10 at time 1565057549 
+Hello from thread 4 of 10 at time 1565057549 
+Hello from thread 3 of 10 at time 1565057549 
+Hello from thread 9 of 10 at time 1565057549 
+
+real	0m0.011s
+user	0m0.000s
+sys	0m0.006s
+time finished 201908061212
