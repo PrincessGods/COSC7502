@@ -91,9 +91,9 @@ int assess_fitness(int* indiv, int prob_size) {
     /* TASK 1.1: IMPLEMENT FITNESS FUNCTION */
     int count = 0;
     int sum = 0;
-    
+
     while(count <= prob_size){
-        if(indiv == 1){
+        if(&indiv == 1){
             sum ++;
         }
         count ++;
