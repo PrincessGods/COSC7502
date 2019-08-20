@@ -33,7 +33,7 @@ int modulo(int a, int b){
 // Print formatted message on given rank
 void rank_print(int my_rank, char* format, ...) {
     va_list args;
-    va_start(args, format);
+    va_start(args, format); 
     printf("Rank %d: ", my_rank);
     vprintf(format, args);
     va_end(args);
@@ -324,7 +324,10 @@ int main(int argc, char** argv) {
 
         // Check if it is time to terminate
         /* TASK 2.6: ADD TERMINATION CONDITION FOR MAIN WHILE LOOP */
-
+        if(found_ideal){
+            MPI_Bcast(&comm_size, comm_size, MPI_INT, root, comm);
+            break;
+        }
 
         // Migration between islands
         // Construct buffers for sending/receiving
