@@ -303,7 +303,6 @@ int main(int argc, char** argv) {
                 best_rank);
         }
         free(best_fitness_vals);
-        free(randBuffer); 
 
         // Check if it is time to terminate
         /* TASK 2.6: ADD TERMINATION CONDITION FOR MAIN WHILE LOOP */
@@ -396,6 +395,7 @@ int main(int argc, char** argv) {
         free(new_pop);
     }
     free(current_pop);
+    free(randBuffer); 
     root_print(my_rank, "Found ideal solution after %d generations."
         " Exiting...\n", num_gens);
     MPI_Finalize();
