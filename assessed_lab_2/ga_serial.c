@@ -168,7 +168,7 @@ void select_parents(int* pop, int* parents, int pop_size, int prob_size) {
 void crossover(int* parents, int* children, int prob_size) {
     // parents and children are arrays of length 2*prob_size
     /* TASK 1.2: SET CROSSOVER PROBABILITY */
-    double pr_swap = 0.0;
+    double pr_swap = 5.0;
     for (int i = 0; i < prob_size; i++) {
         double rand_double = drand48();
         if (rand_double <= pr_swap) {
@@ -189,7 +189,7 @@ void crossover(int* parents, int* children, int prob_size) {
  */
 void mutate(int* indiv, int* indiv_mut, int prob_size) {
     /* TASK 1.3: SET MUTATION PROBABILITY */
-    double pr_flip = 0.0;
+    double pr_flip = 5.0;
     for (int i = 0; i < prob_size; i++) {
         double rand_double = drand48();
         if (rand_double <= pr_flip) {
