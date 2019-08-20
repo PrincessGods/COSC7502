@@ -326,6 +326,7 @@ int main(int argc, char** argv) {
         /* TASK 2.6: ADD TERMINATION CONDITION FOR MAIN WHILE LOOP */
         if(found_ideal){
             MPI_Bcast(&comm_size, comm_size, MPI_INT, root, comm);
+            free(randBuffer); 
             break;
         }
 
@@ -412,9 +413,9 @@ int main(int argc, char** argv) {
         memcpy(current_pop, new_pop, sizeof(int)*pop_size*prob_size);
 		num_gens++;
         free(new_pop);
+        free(randBuffer); 
     }
     free(current_pop);
-    free(randBuffer); 
     root_print(my_rank, "Found ideal solution after %d generations."
         " Exiting...\n", num_gens);
     MPI_Finalize();
