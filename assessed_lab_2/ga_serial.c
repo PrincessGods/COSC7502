@@ -89,7 +89,16 @@ void init_population(int* pop, int pop_size, int prob_size) {
 
 int assess_fitness(int* indiv, int prob_size) {
     /* TASK 1.1: IMPLEMENT FITNESS FUNCTION */
-    return 0;
+    int count = 0;
+    int sum = 0;
+    while(count <= prob_size){
+        if(indiv == 1){
+            sum ++;
+        }
+
+        count ++
+    }
+    return sum;
 }
 
 // Compare function for qsort - sorts fitness in descending order
