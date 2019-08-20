@@ -89,12 +89,11 @@ void init_population(int* pop, int pop_size, int prob_size) {
 
 int assess_fitness(int* indiv, int prob_size) {
     /* TASK 1.1: IMPLEMENT FITNESS FUNCTION */
-    int count = 0;
     int sum = 0;
 
-    while(count <= prob_size){
-        sum += indiv[count];
-        count ++;
+    for (int i = 0; i < prob_size; i++) {
+        printf("indiv: %d, size: %d", indiv[i], prob_size);
+        sum += indiv[i];
     }
     
     return sum;
