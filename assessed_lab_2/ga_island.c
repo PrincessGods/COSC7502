@@ -44,10 +44,10 @@ void root_print(int my_rank, char* format, ...) {
     va_list args;
     if (my_rank != root) {
         return;
+    va_end(args);
     }
     va_start(args, format);
     vprintf(format, args);
-    va_end(args);
 }
 
 /* Fill the pop array with random zeros/ones
@@ -180,13 +180,7 @@ void mutate(int* indiv, int* indiv_mut, int prob_size) {
 void prepare_migrants(int* pop, int* north_send, int* south_send, int side_len,
         int pop_size, int prob_size) {
     /* TASK 2.5: CALCULATE THE SOUTH START INDEX */
-    int south_start_index = 0;
-    for(int i = 0; i < pop_size; i ++){
-        if(pop[i] == 1){
-            south_start_index = i;
-            break;
-        }
-    }
+    int south_start_index = pop_size*prob_size - side_len*prob_size;
     memcpy(north_send, &pop[0], sizeof(int)*side_len*prob_size);
     memcpy(south_send, &pop[south_start_index], sizeof(int)*side_len*prob_size);
 }
@@ -197,13 +191,7 @@ void prepare_migrants(int* pop, int* north_send, int* south_send, int side_len,
 void integrate_migrants(int* pop, int* north_recv, int* south_recv, int side_len,
         int pop_size, int prob_size) {
     /* TASK 2.5: CALCULATE THE SOUTH START INDEX */
-    int south_start_index = 0;
-    for(int i = 0; i < pop_size; i ++){
-        if(pop[i] == 1){
-            south_start_index = i;
-            break;
-        }
-    }
+    int south_start_index = pop_size*prob_size - side_len*prob_size;;
     memcpy(&pop[0], north_recv, sizeof(int)*side_len*prob_size);
     memcpy(&pop[south_start_index], south_recv, sizeof(int)*side_len*prob_size);
 }
