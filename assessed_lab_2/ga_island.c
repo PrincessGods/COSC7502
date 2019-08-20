@@ -360,8 +360,8 @@ int main(int argc, char** argv) {
                 pop_size, prob_size);
 
         /* TASK 2.4: SEND MIGRANTS */
-        MPI_Isend(&rank_north, 1, MPI_INT, rank_north, rank_north, MPI_COMM_WORLD); // north send
-        MPI_Isend(&rank_south, 1, MPI_INT, rank_south, rank_south, MPI_COMM_WORLD); // south send
+        MPI_Isend(&rank_north, 1, MPI_INT, rank_north, rank_north, MPI_COMM_WORLD, &request); // north send
+        MPI_Isend(&rank_south, 1, MPI_INT, rank_south, rank_south, MPI_COMM_WORLD, &request); // south send
 
         // Wait on both receives
         MPI_Waitall(2, recv_reqs, recv_statuses);
