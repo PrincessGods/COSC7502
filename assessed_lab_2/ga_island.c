@@ -350,8 +350,8 @@ int main(int argc, char** argv) {
          * update population
          */
         /* TASK 2.2: DETERMINE rank_north AND rank_south VALUES */
-        int rank_north = my_rank - 1;
-        int rank_south = my_rank + 1;
+        int rank_north = modulo(my_rank - 1, comm_size);
+        int rank_south = modulo(my_rank + 1, comm_size);
 
         /* TASK 2.3: RECEIVE MIGRANTS */
         MPI_Request request;
