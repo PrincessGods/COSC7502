@@ -351,8 +351,9 @@ int main(int argc, char** argv) {
         int rank_south = my_rank + 1;
 
         /* TASK 2.3: RECEIVE MIGRANTS */
-        MPI_Irecv(&rank_north, 1, MPI_INT, rank_north, rank_north, MPI_COMM_WORLD); // north recv
-        MPI_Irecv(&rank_south, 1, MPI_INT, rank_north, rank_south, MPI_COMM_WORLD); // south recv
+        MPI_Request request;
+        MPI_Irecv(&rank_north, 1, MPI_INT, rank_north, rank_north, MPI_COMM_WORLD, &request); // north recv
+        MPI_Irecv(&rank_south, 1, MPI_INT, rank_north, rank_south, MPI_COMM_WORLD, &request); // south recv
         
         // fill north and south send buffers with migrant indivs
         prepare_migrants(current_pop, north_send, south_send, side_len,
