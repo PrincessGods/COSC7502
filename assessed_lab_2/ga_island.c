@@ -63,7 +63,14 @@ void init_population(int* pop, int pop_size, int prob_size) {
 /* One Max fitness function - count the number of ones in bitstring */
 int assess_fitness(int* indiv, int prob_size) {
     /* TASK 1.1: IMPLEMENT FITNESS FUNCTION */
-    return 0;
+    int sum = 0;
+
+    for (int i = 0; i < prob_size; i++) {
+        //printf("indiv: %d, size: %d\n", indiv[i], prob_size);
+        sum += indiv[i];
+    }
+    
+    return sum;
 }
 
 // Compare function for qsort - sorts fitness in descending order
@@ -174,6 +181,12 @@ void prepare_migrants(int* pop, int* north_send, int* south_send, int side_len,
         int pop_size, int prob_size) {
     /* TASK 2.5: CALCULATE THE SOUTH START INDEX */
     int south_start_index = 0;
+    for(int i = 0; i < pop_size; i ++){
+        if(pop[i] == 1){
+            south_start_index = i;
+            break;
+        }
+    }
     memcpy(north_send, &pop[0], sizeof(int)*side_len*prob_size);
     memcpy(south_send, &pop[south_start_index], sizeof(int)*side_len*prob_size);
 }
@@ -185,6 +198,12 @@ void integrate_migrants(int* pop, int* north_recv, int* south_recv, int side_len
         int pop_size, int prob_size) {
     /* TASK 2.5: CALCULATE THE SOUTH START INDEX */
     int south_start_index = 0;
+    for(int i = 0; i < pop_size; i ++){
+        if(pop[i] == 1){
+            south_start_index = i;
+            break;
+        }
+    }
     memcpy(&pop[0], north_recv, sizeof(int)*side_len*prob_size);
     memcpy(&pop[south_start_index], south_recv, sizeof(int)*side_len*prob_size);
 }
@@ -307,6 +326,7 @@ int main(int argc, char** argv) {
         // Check if it is time to terminate
         /* TASK 2.6: ADD TERMINATION CONDITION FOR MAIN WHILE LOOP */
 
+
         // Migration between islands
         // Construct buffers for sending/receiving
         int* north_recv = (int*)malloc(sizeof(int)*side_len*prob_size);
@@ -332,20 +352,16 @@ int main(int argc, char** argv) {
         int rank_south = my_rank + 1;
 
         /* TASK 2.3: RECEIVE MIGRANTS */
-        /*
-        MPI_Irecv(, , , , 0, , ); // north recv
-        MPI_Irecv(, , , , 1, , ); // south recv
-        */
-
+        MPI_Irecv(&rank_north, 1, MPI_INT, rank_north, rank_north, MPI_COMM_WORLD); // north recv
+        MPI_Irecv(&rank_south, 1, MPI_INT, rank_north, rank_south, MPI_COMM_WORLD); // south recv
+        
         // fill north and south send buffers with migrant indivs
         prepare_migrants(current_pop, north_send, south_send, side_len,
                 pop_size, prob_size);
 
         /* TASK 2.4: SEND MIGRANTS */
-        /*
-        MPI_Isend(, , , , 1, , ); // north send
-        MPI_Isend(, , , , 0, , ); // south send
-        */
+        MPI_Isend(&rank_north, 1, MPI_INT, rank_north, rank_north, MPI_COMM_WORLD); // north send
+        MPI_Isend(&rank_south, 1, MPI_INT, rank_south, rank_south, MPI_COMM_WORLD); // south send
 
         // Wait on both receives
         MPI_Waitall(2, recv_reqs, recv_statuses);
