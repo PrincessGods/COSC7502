@@ -255,7 +255,7 @@ int main(int argc, char** argv) {
     const long int iseedlong_base = atoi(argv[3]);
     /* TASK 2.1: CHANGE THE SEED TO BE UNIQUE FOR EACH RANK */
     const long int iseedlong_rank;
-    struct drand48_data* randBuffer
+    struct drand48_data* randBuffer;
     for(int i = 0; i < comm_size; i++){
         iseedlong_rank = iseedlong_base + i;
         randBuffer = malloc(sizeof(struct drand48_data));
