@@ -92,7 +92,7 @@ int assess_fitness(int* indiv, int prob_size) {
     int sum = 0;
 
     for (int i = 0; i < prob_size; i++) {
-        printf("indiv: %d, size: %d", indiv[i], prob_size);
+        //printf("indiv: %d, size: %d\n", indiv[i], prob_size);
         sum += indiv[i];
     }
     
