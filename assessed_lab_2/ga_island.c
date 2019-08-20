@@ -235,8 +235,14 @@ int main(int argc, char** argv) {
     // seed RNG dependent on rank
     const long int iseedlong_base = atoi(argv[3]);
     /* TASK 2.1: CHANGE THE SEED TO BE UNIQUE FOR EACH RANK */
-    const long int iseedlong_rank = iseedlong_base;
-    srand48(iseedlong_rank);
+    const long int iseedlong_rank;
+    struct drand48_data* randBuffer
+    for(int i = 0; i < comm_size; i++){
+        iseedlong_rank = iseedlong_base + i;
+        randBuffer = malloc(sizeof(struct drand48_data));
+        srand48_r(iseedlong_rank, randBuffer);
+    }
+    //srand48(iseedlong_rank);
 
     root_print(my_rank, "Using local population size of %d\n", pop_size);
     root_print(my_rank, "Global population size is %d over %d ranks\n",
@@ -297,6 +303,7 @@ int main(int argc, char** argv) {
                 best_rank);
         }
         free(best_fitness_vals);
+        free(randBuffer); 
 
         // Check if it is time to terminate
         /* TASK 2.6: ADD TERMINATION CONDITION FOR MAIN WHILE LOOP */
@@ -322,8 +329,8 @@ int main(int argc, char** argv) {
          * update population
          */
         /* TASK 2.2: DETERMINE rank_north AND rank_south VALUES */
-        int rank_north = 0;
-        int rank_south = 0;
+        int rank_north = my_rank - 1;
+        int rank_south = my_rank + 1;
 
         /* TASK 2.3: RECEIVE MIGRANTS */
         /*
