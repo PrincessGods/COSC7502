@@ -242,13 +242,8 @@ int main(int argc, char** argv) {
     // seed RNG dependent on rank
     const long int iseedlong_base = atoi(argv[3]);
     /* TASK 2.1: CHANGE THE SEED TO BE UNIQUE FOR EACH RANK */
-    struct drand48_data* randBuffer;
-    for(int i = 0; i < comm_size; i++){
-        const long int iseedlong_rank = iseedlong_base + i;
-        randBuffer = malloc(sizeof(struct drand48_data));
-        srand48_r(iseedlong_rank, randBuffer);
-    }
-    //srand48(iseedlong_rank);
+    const long int iseedlong_rank = iseedlong_base + my_rank;
+    srand48(iseedlong_rank);
 
     root_print(my_rank, "Using local population size of %d\n", pop_size);
     root_print(my_rank, "Global population size is %d over %d ranks\n",
@@ -312,8 +307,13 @@ int main(int argc, char** argv) {
 
         // Check if it is time to terminate
         /* TASK 2.6: ADD TERMINATION CONDITION FOR MAIN WHILE LOOP */
+        int buf = 0;
         if(found_ideal){
-            MPI_Bcast(&comm_size, comm_size, MPI_INT, root, comm);
+            buf = 1;
+            MPI_Bcast(&buf, comm_size, MPI_INT, root, comm);
+        }
+
+        if(buf == 1){
             break;
         }
 
