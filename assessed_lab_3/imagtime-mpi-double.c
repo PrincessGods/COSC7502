@@ -380,7 +380,7 @@ int main(int argc, char** argv)
         copyPsi(psiold, psinew, N0, N1);
 
         count ++;
-        printf("iteration number = %d, imag time = %e, nSolution = %e, ekinetuc = %e, epotential = %e, etotal = %e",
+        printf("iteration number = %d, imag time = %e, nSolution = %e, ekinetuc = %e, epotential = %e, etotal = %e\n",
                     count, tcur, psi2integ, ekinetic, epotent, (ekinetic+epotent));
     }
     if (myrank == 0) {
