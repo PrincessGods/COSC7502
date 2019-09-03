@@ -368,10 +368,10 @@ int main(int argc, char** argv)
         /* calculate the updated energies */
         ekinetic=getTenergy(psinew, N0, N1, pkinetic, dxy);
         epotent=getVenergy(psinew, N0, N1, vpot, dxy);
-        if (myrank == 0) {
-          printf("imag time = %e Energy = %e + %e = %e \n",tcur,
-                                 ekinetic,epotent,(ekinetic+epotent));  
-        } 
+        // if (myrank == 0) {
+        //   printf("imag time = %e Energy = %e + %e = %e \n",tcur,
+        //                          ekinetic,epotent,(ekinetic+epotent));  
+        // } 
 
         /* make sure all sends are completed: */
         if (nsends > 0) { 
