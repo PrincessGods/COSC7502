@@ -207,7 +207,7 @@ double getTenergy(double *psi, const int N0, const int N1,
     psitint = psitint*dxy*dxy;
         /* enter your MPI code here */
     double allsum;
-    MPI_Allreduce (&psitint, &allsum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Allreduce (&psitint, &allsum, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
     return psitint;
 }
 
@@ -225,7 +225,7 @@ double getVenergy(double *psi, const int N0, const int N1,
     psivint = psivint*dxy*dxy;
         /* enter your MPI code here */
     double allsum;
-    MPI_Allreduce (&psivint, &allsum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Allreduce (&psivint, &allsum, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
     return psivint;
 }
 
@@ -242,7 +242,7 @@ double getPsi2Integral(double *psi, const int N0, const int N1,
     psi2int = psi2int*dxy*dxy;
     /* enter your MPI code here - code will not work without this! */
     double allsum;
-    MPI_Allreduce (&psi2int, &allsum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Allreduce (&psi2int, &allsum, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
 
     return psi2int;
 }
