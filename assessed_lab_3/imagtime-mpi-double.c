@@ -270,9 +270,10 @@ int main(int argc, char** argv)
     MPI_Status status[2];
 
     MPI_Init(&argc, &argv);
-    printf("%s\n", argv[1]);
     MPI_Comm_rank(comm, &myrank);
     MPI_Comm_size(comm, &mysize);
+
+    printf("%s\n", &argv[1]);
 
     if (mysize != nranks) {
         printf("This program is meant to be run %d ranks.\n", nranks);
