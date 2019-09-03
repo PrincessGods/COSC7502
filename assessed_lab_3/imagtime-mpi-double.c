@@ -242,7 +242,7 @@ double getPsi2Integral(double *psi, const int N0, const int N1,
 
 int main(int argc, char** argv)
 {
-    const int N0=64;          /* hardcoded grid size max N0<2048*/
+    const int N0=128;          /* hardcoded grid size max N0<2048*/
     const int nranks=1;       /* number of splits to do = MPI procs */
     const int N1=N0/nranks;   /* the other dimension of the rectangle */
     const double mass=1.0e0;  /* mass in arbitary units */
@@ -269,7 +269,9 @@ int main(int argc, char** argv)
     MPI_Request Rrequests[2], Srequests[2];
     MPI_Status status[2];
 
-    MPI_Init(&argc, &argv);
+    int provided;
+
+    MPI_Init(&argc, &argv, MPI_THREAD_SINGLE, &provided);
     MPI_Comm_rank(comm, &myrank);
     MPI_Comm_size(comm, &mysize);
 
