@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --partition=cosc
+#SBATCH --partition=coursework
 #SBATCH --job-name=yo1x1x1x1
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
