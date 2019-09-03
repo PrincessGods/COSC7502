@@ -206,6 +206,8 @@ double getTenergy(double *psi, const int N0, const int N1,
     }
     psitint = psitint*dxy*dxy;
         /* enter your MPI code here */
+    double allsum;
+    MPI_Allreduce (&psitint, &allsum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
     return psitint;
 }
 
@@ -222,6 +224,8 @@ double getVenergy(double *psi, const int N0, const int N1,
     }
     psivint = psivint*dxy*dxy;
         /* enter your MPI code here */
+    double allsum;
+    MPI_Allreduce (&psivint, &allsum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
     return psivint;
 }
 
@@ -237,6 +241,9 @@ double getPsi2Integral(double *psi, const int N0, const int N1,
     }
     psi2int = psi2int*dxy*dxy;
     /* enter your MPI code here - code will not work without this! */
+    double allsum;
+    MPI_Allreduce (&psi2int, &allsum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+
     return psi2int;
 }
 
@@ -313,6 +320,7 @@ int main(int argc, char** argv)
 
     copyPsi(psiold, psinew, N0, N1);
 
+    int count = 0;
     while (tcur < tend) {
 
         int nsends=0;
@@ -371,6 +379,9 @@ int main(int argc, char** argv)
         }
         copyPsi(psiold, psinew, N0, N1);
 
+        count ++;
+        printf("iteration number = %d, imag time = %e, nSolution = %e, ekinetuc = %e, epotential = %e, etotal = %e",
+                    count, tcur, psi2integ, ekinetic, epotent, (ekinetic+epotent));
     }
     if (myrank == 0) {
             printf("Completed after %d time steps.\n",ncur);
