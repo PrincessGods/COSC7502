@@ -55,7 +55,8 @@ void updateNorthPsi(double *psinew,
                          const int N0, const int N1,
                          const double a, const double b, const double c)
 {
-    int i; /* j = N1-1 */
+    int i;  
+    int j = N1-1;
     for (i=1; i<N0-1; ++i) {
         psinew[i+N0*(N1-1)] =
                   a * psiold[i+N0*(N1-1)]    +   /* center */
