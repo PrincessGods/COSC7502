@@ -273,8 +273,6 @@ int main(int argc, char** argv)
     MPI_Comm_rank(comm, &myrank);
     MPI_Comm_size(comm, &mysize);
 
-    printf("argv: %s\n", argv[0]);
-
     if (mysize != nranks) {
         printf("This program is meant to be run %d ranks.\n", nranks);
         printf("you need to set hardcoded nranks == MPI_Comm_size \n");
