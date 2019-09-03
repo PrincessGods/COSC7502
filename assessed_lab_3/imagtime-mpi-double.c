@@ -250,7 +250,7 @@ double getPsi2Integral(double *psi, const int N0, const int N1,
 int main(int argc, char** argv)
 {
     const int N0=128;          /* hardcoded grid size max N0<2048*/
-    const int nranks=1;       /* number of splits to do = MPI procs */
+    const int nranks=4;       /* number of splits to do = MPI procs */
     const int N1=N0/nranks;   /* the other dimension of the rectangle */
     const double mass=1.0e0;  /* mass in arbitary units */
     const double hbar=1.0e0;  /* plancks constant in arbitary units */
@@ -320,7 +320,6 @@ int main(int argc, char** argv)
 
     copyPsi(psiold, psinew, N0, N1);
 
-    int count = 0;
     while (tcur < tend) {
 
         int nsends=0;
@@ -379,9 +378,8 @@ int main(int argc, char** argv)
         }
         copyPsi(psiold, psinew, N0, N1);
 
-        count ++;
         printf("iteration number = %d, imag time = %e, nSolution = %e, ekinetuc = %e, epotential = %e, etotal = %e\n",
-                    count, tcur, psi2integ, ekinetic, epotent, (ekinetic+epotent));
+                    ncur, tcur, psi2integ, ekinetic, epotent, (ekinetic+epotent));
     }
     if (myrank == 0) {
             printf("Completed after %d time steps.\n",ncur);
