@@ -69,7 +69,7 @@ void updateNorthPsi(double *psinew,
 
 void updateSouthPsi(double *psinew, 
                     const double *psiold, const double *psisouth, const double *vpot,
-                    const int N0, //const int N1,
+                    const int N0, const int N1,
                     const double a, const double b, const double c)
 {
     int i; /* j = 0 */
@@ -81,6 +81,7 @@ void updateSouthPsi(double *psinew,
                        psiold[i+N0] )  + /* north */
                   c * vpot[i]*psiold[i]; /* potential */
     }
+    N1;
 }
 
 void copyPsi(double *p_dst, const double *p_src,
