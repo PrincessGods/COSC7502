@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <omp.h>
 
 /* global variables */
 const MPI_Comm comm=MPI_COMM_WORLD;
@@ -131,10 +132,14 @@ void initialisePsi(double *pinit, const int N0, const int N1,
 
 void rescalePsi(double *pinit, const int N0, const int N1, const double psiscale)
 {
-    int i, j;
-    for (j=0; j<N1; ++j) {
-        for (i=0; i<N0; ++i) {
-           pinit[i+N0*j] = pinit[i+N0*j] * psiscale; // scale including boundary
+    #pragma omp parallel
+    {   
+        int i,j;
+        #pragma omp for
+        for (j=0; j<N1; ++j) {
+            for (i=0; i<N0; ++i) {
+            pinit[i+N0*j] = pinit[i+N0*j] * psiscale; // scale including boundary
+            }
         }
     }
 }
@@ -193,58 +198,92 @@ void initialisePot(double *vpot, const int N0, const int N1,
 double getTenergy(double *psi, const int N0, const int N1,
                   const double pkinetic, const double dxy){
     double psitint=0.0e0;
-    int i,j;
-    for (j=1; j<(N1-1); ++j) {
-        for (i=1; i<(N0-1); ++i) {
-            psitint = psitint + pkinetic*psi[i+N0*j]*
-                      ( -4.0e0 * psi[i+N0*j] + /* center */
-                           psi[(i-1)+N0*j] +   /* west */
-                           psi[(i+1)+N0*j] +   /* east */
-                           psi[i+N0*(j-1)] +   /* south */
-                           psi[i+N0*(j+1)] );   /* north */
+    double sum = 0.0e0;
+    #pragma omp parallel private(psitint)
+    {   
+        int i,j;
+        #pragma omp for
+        for (j=1; j<(N1-1); ++j) {
+            for (i=1; i<(N0-1); ++i) {
+                psitint = psitint + pkinetic*psi[i+N0*j]*
+                        ( -4.0e0 * psi[i+N0*j] + /* center */
+                            psi[(i-1)+N0*j] +   /* west */
+                            psi[(i+1)+N0*j] +   /* east */
+                            psi[i+N0*(j-1)] +   /* south */
+                            psi[i+N0*(j+1)] );   /* north */
+            }
+        }
+
+        #pragma omp critical
+        {   
+            sum += psitint;
         }
     }
+    psitint = sum;
     psitint = psitint*dxy*dxy;
         /* enter your MPI code here */
     double allsum;
     MPI_Allreduce (&psitint, &allsum, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-    return psitint;
+    return allsum;
 }
 
 /* calculate the potential energy integral of psi over the domain */
 double getVenergy(double *psi, const int N0, const int N1,
                   double *vpot, const double dxy){
     double psivint=0.0e0;
-    int i,j;
-    for (j=1; j<(N1-1); ++j) {
-        for (i=1; i<(N0-1); ++i) {
-            psivint = psivint + vpot[i+N0*j]*psi[i+N0*j]*psi[i+N0*j];
+    double sum = 0.0e0;
+    #pragma omp parallel private(psivint)
+    {   
+        int i,j;
+        #pragma omp for
+        for (j=1; j<(N1-1); ++j) {
+            for (i=1; i<(N0-1); ++i) {
+                psivint = psivint + vpot[i+N0*j]*psi[i+N0*j]*psi[i+N0*j];
+            }
+    /*        printf("debug int j: %d %d %d %e \n",myrank,i,j,psivint); */
         }
-/*        printf("debug int j: %d %d %d %e \n",myrank,i,j,psivint); */
+
+        #pragma omp critical
+        {   
+            sum += psivint;
+        }
     }
+    psivint = sum;
     psivint = psivint*dxy*dxy;
         /* enter your MPI code here */
     double allsum;
     MPI_Allreduce (&psivint, &allsum, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-    return psivint;
+    return allsum;
 }
 
 /* calculate the integral of psi^2 over the domain */
 double getPsi2Integral(double *psi, const int N0, const int N1,
                             const double dxy) {
     double psi2int=0.0e0;
-    int i,j;
-    for (j=1; j<(N1-1); ++j) {
-        for (i=1; i<(N0-1); ++i) {
-            psi2int = psi2int + psi[i+N0*j]*psi[i+N0*j];
+    double sum = 0.0e0;
+    #pragma omp parallel private(psi2int)
+    {   
+        int i,j;
+        #pragma omp for
+        for (j=1; j<(N1-1); ++j) {
+            for (i=1; i<(N0-1); ++i) {
+                psi2int = psi2int + psi[i+N0*j]*psi[i+N0*j];
+            }
+        }
+
+        #pragma omp critical
+        {   
+            sum += psi2int;
         }
     }
+
+    psi2int = sum;
     psi2int = psi2int*dxy*dxy;
     /* enter your MPI code here - code will not work without this! */
     double allsum;
     MPI_Allreduce (&psi2int, &allsum, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
 
-    return psi2int;
+    return allsum;
 }
 
 int main(int argc, char** argv)
