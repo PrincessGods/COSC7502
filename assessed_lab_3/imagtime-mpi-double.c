@@ -383,9 +383,9 @@ int main(int argc, char** argv)
 
         /* calculate the updated energies */
         ekinetic=getTenergy(psinew, N0, N1, pkinetic, dxy);
-        printf("ekinetic: psinew=%e, N0=%d, N1=%d, pkinetic=%e, dxy=%e\n", psinew,N0,N1,pkinetic,dxy);
+        printf("ekinetic: psinew=%e, N0=%d, N1=%d, pkinetic=%e, dxy=%e\n", &psinew,N0,N1,pkinetic,dxy);
         epotent=getVenergy(psinew, N0, N1, vpot, dxy);
-        printf("epotent: psinew=%e, N0=%d, N1=%d, vpot=%e, dxy=%e\n", psinew,N0,N1,vpot,dxy);
+        printf("epotent: psinew=%e, N0=%d, N1=%d, vpot=%e, dxy=%e\n", &psinew,N0,N1,&vpot,dxy);
         // if (myrank == 0) {
         //   printf("imag time = %e Energy = %e + %e = %e \n",tcur,
         //                          ekinetic,epotent,(ekinetic+epotent));  
