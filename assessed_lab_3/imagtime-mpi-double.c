@@ -338,6 +338,7 @@ int main(int argc, char** argv)
     if (myrank == 0) {
         printf("imag time = %e Energy = %e + %e = %e \n",tcur,
                                  ekinetic,epotent,(ekinetic+epotent));  
+        printf("psi2integ = %e\n", psi2integ);
     }
 
     copyPsi(psiold, psinew, N0, N1);
