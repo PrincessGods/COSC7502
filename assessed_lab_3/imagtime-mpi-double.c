@@ -202,7 +202,7 @@ double getTenergy(double *psi, const int N0, const int N1,
     #pragma omp parallel private(psitint)
     {   
         int i,j;
-        #pragma omp for
+        #pragma omp for reduction (+: sum )
         for (j=1; j<(N1-1); ++j) {
             for (i=1; i<(N0-1); ++i) {
                 psitint = psitint + pkinetic*psi[i+N0*j]*
@@ -213,12 +213,9 @@ double getTenergy(double *psi, const int N0, const int N1,
                             psi[i+N0*(j+1)] );   /* north */
             }
         }
-
-        #pragma omp critical
-        {   
-            sum += psitint;
-        }
     }
+
+    printf("Tenergy sum: %le\n", sum);
     psitint = sum;
     psitint = psitint*dxy*dxy;
         /* enter your MPI code here */
