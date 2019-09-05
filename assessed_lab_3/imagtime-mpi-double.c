@@ -257,11 +257,11 @@ double getPsi2Integral(double *psi, const int N0, const int N1,
     }
     
     psi2int = psi2int*dxy*dxy;
-    printf("psi2integ = %e\n", psi2int);
+    
     /* enter your MPI code here - code will not work without this! */
     double allsum;
     MPI_Allreduce (&psi2int, &allsum, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-
+    printf("psi2integ = %e\n", allsum);
     return allsum;
 }
 
