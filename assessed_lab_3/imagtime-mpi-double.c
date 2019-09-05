@@ -245,15 +245,19 @@ double getPsi2Integral(double *psi, const int N0, const int N1,
                             const double dxy) {
     double psi2int=0.0e0;
     int i,j;
+    #pragma omp parallel private(i, j)
+    {   
         
-        //#pragma omp for reduction (+: psi2int)
+        #pragma omp for reduction (+: psi2int)
         for (j=1; j<(N1-1); ++j) {
             for (i=1; i<(N0-1); ++i) {
                 psi2int = psi2int + psi[i+N0*j]*psi[i+N0*j];
             }
         }
-    printf("psi2integ = %e\n", psi2int);
+    }
+    
     psi2int = psi2int*dxy*dxy;
+    printf("psi2integ = %e\n", psi2int);
     /* enter your MPI code here - code will not work without this! */
     double allsum;
     MPI_Allreduce (&psi2int, &allsum, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
