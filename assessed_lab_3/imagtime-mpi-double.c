@@ -336,7 +336,7 @@ int main(int argc, char** argv)
     return 0;     */
 
     if (myrank == 0) {
-      printf("imag time = %e Energy = %e + %e = %e \n",tcur,
+        printf("imag time = %e Energy = %e + %e = %e \n",tcur,
                                  ekinetic,epotent,(ekinetic+epotent));  
     }
 
@@ -394,14 +394,21 @@ int main(int argc, char** argv)
         //                          ekinetic,epotent,(ekinetic+epotent));  
         // } 
 
+        if (myrank == 0) {
+            printf("iteration number = %d, imag time = %e Energy = %e + %e = %e \n", ncur, tcur,
+                                 ekinetic,epotent,(ekinetic+epotent));  
+
+            printf("psi2integ = %e\n", psi2integ);
+        } 
+
         /* make sure all sends are completed: */
         if (nsends > 0) { 
             MPI_Waitall(nsends, Srequests, status);
         }
         copyPsi(psiold, psinew, N0, N1);
 
-        printf("iteration number = %d, imag time = %e, nSolution = %e, ekinetuc = %e, epotential = %e, etotal = %e\n",
-                    ncur, tcur, psi2integ, ekinetic, epotent, (ekinetic+epotent));
+        // printf("iteration number = %d, imag time = %e, nSolution = %e, ekinetuc = %e, epotential = %e, etotal = %e\n",
+        //             ncur, tcur, psi2integ, ekinetic, epotent, (ekinetic+epotent));
     }
     if (myrank == 0) {
             printf("Completed after %d time steps.\n",ncur);
