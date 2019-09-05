@@ -390,9 +390,8 @@ int main(int argc, char** argv)
         // } 
 
         if (myrank == 0) {
-            printf("iteration number = %d, imag time = %e, psi2integ = %e, 
-                    ekinetic = %e, epotent = %e, Energy = %e \n", 
-                    ncur, tcur, psi2integ, ekinetic, epotent, (ekinetic+epotent));  
+            printf("iteration number = %d, imag time = %e, psi2integ = %e, ekinetic = %e, epotent = %e, Energy = %e \n", 
+                                ncur, tcur, psi2integ, ekinetic, epotent, (ekinetic+epotent));  
         } 
 
         /* make sure all sends are completed: */
