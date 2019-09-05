@@ -133,7 +133,7 @@ void initialisePsi(double *pinit, const int N0, const int N1,
 void rescalePsi(double *pinit, const int N0, const int N1, const double psiscale)
 {   
     int i,j;
-    #pragma omp parallel(i, j)
+    #pragma omp parallel private(i, j)
     {   
         #pragma omp for
         for (j=0; j<N1; ++j) {
