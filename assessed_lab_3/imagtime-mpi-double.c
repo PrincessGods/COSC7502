@@ -75,14 +75,13 @@ void updateSouthPsi(double *psinew,
 {
     int i; /* j = 0 */
     for (i=1; i<N0-1; ++i) {
-        psinew[i] = a * psiold[i]  * (N1 * 0)   +  /* center */
+        psinew[i] = a * psiold[i]      +  /* center */
                   b *( psiold[i-1]     +  /* west */
                        psiold[i+1]     +  /* east */
                        psisouth[i]     +  /* south */
                        psiold[i+N0] )  + /* north */
                   c * vpot[i]*psiold[i]; /* potential */
     }
-    
 }
 
 void copyPsi(double *p_dst, const double *p_src,
