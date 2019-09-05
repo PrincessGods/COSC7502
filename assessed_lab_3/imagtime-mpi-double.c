@@ -261,7 +261,6 @@ double getPsi2Integral(double *psi, const int N0, const int N1,
     /* enter your MPI code here - code will not work without this! */
     double allsum;
     MPI_Allreduce (&psi2int, &allsum, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-    printf("psi2integ = %e\n", allsum);
     return allsum;
 }
 
@@ -391,8 +390,9 @@ int main(int argc, char** argv)
         // } 
 
         if (myrank == 0) {
-            printf("iteration number = %d, imag time = %e Energy = %e + %e = %e \n", ncur, tcur,
-                                 ekinetic,epotent,(ekinetic+epotent));  
+            printf("iteration number = %d, imag time = %e, psi2integ = %e, 
+                    ekinetic = %e, epotent = %e, Energy = %e \n", 
+                    ncur, tcur, psi2integ, ekinetic, epotent, (ekinetic+epotent));  
         } 
 
         /* make sure all sends are completed: */
