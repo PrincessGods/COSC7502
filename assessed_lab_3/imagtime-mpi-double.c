@@ -210,6 +210,7 @@ double getTenergy(double *psi, const int N0, const int N1,
                             psi[(i+1)+N0*j] +   /* east */
                             psi[i+N0*(j-1)] +   /* south */
                             psi[i+N0*(j+1)] );   /* north */
+                printf("Tenergy sum: %le, when j=&d\n", psitint, j);
             }
         }
     }
