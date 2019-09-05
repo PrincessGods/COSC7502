@@ -198,11 +198,10 @@ void initialisePot(double *vpot, const int N0, const int N1,
 double getTenergy(double *psi, const int N0, const int N1,
                   const double pkinetic, const double dxy){
     double psitint=0.0e0;
-    double sum = 0.0e0;
-    #pragma omp parallel private(psitint)
+    int i, j;
+    #pragma omp parallel private(i, j)
     {   
-        int i,j;
-        #pragma omp for reduction (+: sum )
+        #pragma omp for reduction (+: psitint)
         for (j=1; j<(N1-1); ++j) {
             for (i=1; i<(N0-1); ++i) {
                 psitint = psitint + pkinetic*psi[i+N0*j]*
@@ -215,8 +214,7 @@ double getTenergy(double *psi, const int N0, const int N1,
         }
     }
 
-    printf("Tenergy sum: %le\n", sum);
-    psitint = sum;
+    printf("Tenergy sum: %le\n", psitint);
     psitint = psitint*dxy*dxy;
         /* enter your MPI code here */
     double allsum;
