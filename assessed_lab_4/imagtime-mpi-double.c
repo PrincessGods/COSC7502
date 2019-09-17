@@ -266,8 +266,8 @@ double getPsi2Integral(double *psi, const int N0, const int N1,
 
 int main(int argc, char** argv)
 {
-    const int N0=64;          /* hardcoded grid size max N0<2048*/
-    const int nranks=4;       /* number of splits to do = MPI procs */
+    const int N0=argv[1];          /* hardcoded grid size max N0<2048*/
+    const int nranks=argv[2];       /* number of splits to do = MPI procs */
     const int N1=N0/nranks;   /* the other dimension of the rectangle */
     const double mass=1.0e0;  /* mass in arbitary units */
     const double hbar=1.0e0;  /* plancks constant in arbitary units */
@@ -295,8 +295,9 @@ int main(int argc, char** argv)
     double ekinetic,epotent;
     MPI_Request Rrequests[2], Srequests[2];
     MPI_Status status[2];
-    printf("argv1: %s\n", argv[1]);
-    printf("argv2: %s\n", argv[2]);
+
+    // printf("argv1: %s\n", );
+    // printf("argv2: %s\n", );
 
     int provided;
 
