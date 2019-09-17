@@ -14,7 +14,7 @@
  *
  * To compile on clusters :  
  * module load mpi/openmpi-x86_64
- * mpicc -Wall -Wextra -o imagtime-mpi-double.exe imagtime-mpi-double.c -lm
+ * mpicc -Wall -fopenmp -Wextra -o imagtime-mpi-double.exe imagtime-mpi-double.c -lm
  * mpicc -O3 -o imagtime-mpi-double.exe imagtime-mpi-double.c -lm
  *
  * to run in sequential (match the 1 with whatever nranks is)
