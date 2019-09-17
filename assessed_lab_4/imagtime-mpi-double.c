@@ -295,8 +295,8 @@ int main(int argc, char** argv)
     double ekinetic,epotent;
     MPI_Request Rrequests[2], Srequests[2];
     MPI_Status status[2];
-    printf("argv1: %d\n", argv[1]);
-    printf("argv2: %d\n", argv[2]);
+    printf("argv1: %s\n", &argv[1]);
+    printf("argv2: %s\n", &argv[2]);
 
     int provided;
 
