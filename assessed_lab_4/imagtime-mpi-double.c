@@ -267,7 +267,7 @@ double getPsi2Integral(double *psi, const int N0, const int N1,
 int main(int argc, char** argv)
 {
     const int N0=64;          /* hardcoded grid size max N0<2048*/
-    const int nranks=1;       /* number of splits to do = MPI procs */
+    const int nranks=4;       /* number of splits to do = MPI procs */
     const int N1=N0/nranks;   /* the other dimension of the rectangle */
     const double mass=1.0e0;  /* mass in arbitary units */
     const double hbar=1.0e0;  /* plancks constant in arbitary units */
@@ -286,12 +286,17 @@ int main(int argc, char** argv)
     int ncur=0;
     double tcur=0.0e0;
     double psi2integ=0.0e0;
-    double psiold[N0*N1], psinew[N0*N1], psisouth[N0], psinorth[N0];
-    double vpot[N0*N1];
+    double* psiold = malloc(sizeof(double) * N0*N1);
+    double* psinew = malloc(sizeof(double) * N0*N1);
+    double* psisouth = malloc(sizeof(double) * N0);
+    double* psinorth = malloc(sizeof(double) * N0);
+    double* vpot = malloc(sizeof(double) * N0*N1);
     double psiscale;
     double ekinetic,epotent;
     MPI_Request Rrequests[2], Srequests[2];
     MPI_Status status[2];
+    printf("argv1: %d\n", argv[1]);
+    printf("argv2: %d\n", argv[2]);
 
     int provided;
 
@@ -412,6 +417,12 @@ int main(int argc, char** argv)
     }    
 
     MPI_Finalize();
+
+    free(psiold);
+    free(psinew);
+    free(psisouth);
+    free(psinorth);
+    free(vpot);
     return 0;
 }
 
