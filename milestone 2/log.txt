@@ -1,0 +1,3 @@
+cd mnt/e/UQ/COSC7502/assignment/milestone\ \2
+g++ Indep_set.cpp -o Indep_set2
+./Indep_set2 testfile_in3.txt testfile_out.txt
