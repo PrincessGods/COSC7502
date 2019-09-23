@@ -1,3 +1,4 @@
+#include <bits/stdc++.h> 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -68,8 +69,8 @@ string read_line(FILE* file){
         }
     }
 
-    map<int, list<int> >::iterator itr; 
-    map<int, list<int> >::iterator itr2;
+    map<int, list<int>>::iterator itr; 
+    map<int, list<int>>::iterator itr2;
     list<int> :: iterator it; 
 
     /* printing map */ 
@@ -86,7 +87,7 @@ string read_line(FILE* file){
     // cout << endl;
 
     /* calculate size of MIS */
-    map<int, list<int> > temGraph = graph;
+    map<int, list<int>> temGraph = graph;
     int minCover = 0;
 
     for (itr = temGraph.begin(); itr != temGraph.end(); ++itr) { 
