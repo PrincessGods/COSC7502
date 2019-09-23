@@ -1,6 +1,7 @@
-#include <bits/stdc++.h> 
 #include <stdio.h>
 #include <stdlib.h>
+#include <mpi.h>
+#include <omp.h>
 #include <string.h>
 #include <string> 
 #include <iostream> 
