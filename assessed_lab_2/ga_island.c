@@ -307,16 +307,17 @@ int main(int argc, char** argv) {
 
         // Check if it is time to terminate
         /* TASK 2.6: ADD TERMINATION CONDITION FOR MAIN WHILE LOOP */
-        }
+
         int buf = 0;
         if(found_ideal){
             buf = 1;
             MPI_Bcast(&buf, comm_size, MPI_INT, root, comm);
+        }
 
         if(buf == 1){
             break;
         }
-
+    }
         // Migration between islands
         // Construct buffers for sending/receiving
         int* north_recv = (int*)malloc(sizeof(int)*side_len*prob_size);
