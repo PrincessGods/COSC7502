@@ -18,11 +18,11 @@ const int root = 0;
 int myrank, mysize;
 list<int> indSet;
 
-map<int, list<int>> read_line(FILE* file){
+map<int, list<int> > read_line(FILE* file){
     int next = 0;
     int size = 0;
 
-    map<int, list<int>> graph;
+    map<int, list<int> > graph;
     list<int> vertices;
     string result = ""; 
 
@@ -77,11 +77,11 @@ map<int, list<int>> read_line(FILE* file){
 }
 
 /* find the minimum edge cover */
-int findMinCover(map<int, list<int>> graph) {
-    map<int, list<int>>::iterator itr;
+int findMinCover(map<int, list<int> > graph) {
+    map<int, list<int> >::iterator itr;
     list<int> :: iterator it;
 
-    map<int, list<int>> temGraph = graph;
+    map<int, list<int> > temGraph = graph;
     int minCover = 0;
 
     for (itr = temGraph.begin(); itr != temGraph.end(); ++itr) { 
@@ -101,8 +101,8 @@ int findMinCover(map<int, list<int>> graph) {
 }
 
 /* find the maximum independent set */
-void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
-    map<int, list<int>>::iterator itr;
+void findMaxIndSet(map<int, list<int> > graph, char* input, char* output) {
+    map<int, list<int> >::iterator itr;
     list<int> :: iterator it; 
     list<int> indSetMax;
     string result = "";
@@ -205,7 +205,7 @@ int main(int argc, char** argv) {
     }
 
     //read input file
-    map<int, list<int>> input;
+    map<int, list<int> > input;
     input = read_line(file);
 
     //write output file
