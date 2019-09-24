@@ -45,7 +45,7 @@ map<int, list<int> > read_line(FILE* file){
                     int vertex = 0; 
                     geek >> vertex;
                     vertices.push_back(vertex);
-                    graph.insert(pair<int, list<int>>(count - 1, vertices));
+                    graph.insert(pair<int, list<int> >(count - 1, vertices));
                     indSet.push_back(count - 1);
                     result = "";
                 }
@@ -65,7 +65,7 @@ map<int, list<int> > read_line(FILE* file){
         
         if(next == '\n'){
             if(count > 0){
-                graph.insert(pair<int, list<int>>(count - 1, vertices));
+                graph.insert(pair<int, list<int> >(count - 1, vertices));
                 indSet.push_back(count - 1);
                 vertices = list<int>();
             }
