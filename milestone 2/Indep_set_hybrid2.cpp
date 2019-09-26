@@ -207,7 +207,6 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             }
         }
     }
-    cout << "fk: " << myrank << '\n';
 
     if(myrank != mysize - 1){
         recvMark = 1;
@@ -215,7 +214,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     }
 
     MPI_Barrier(comm);
-    
+    cout << "fk: " << myrank << '\n';
     int indSetMaxSize = 0;
     if(myrank == 0){
         for(int i = 0; i < indSet.size(); i++){
