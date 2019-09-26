@@ -229,7 +229,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         }
     }
     MPI_Bcast(&indSetMaxSize, mysize, MPI_INT, root, comm);
-    
+    cout << "indSetMaxSize: " << indSetMaxSize << '\n';
     while(indSetMaxSize < maxSize && indSet.size() > 1){
         int arrIndex = 0;
         for(it = indSet.begin(); it != indSet.end(); ++it) {
