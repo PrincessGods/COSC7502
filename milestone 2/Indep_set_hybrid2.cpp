@@ -270,10 +270,15 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             }
 
             MPI_Barrier(comm);
-            
-            for(int i = 0; i < indSet.size(); i++){
-                if(misTemp[i] == -1) {
-                    removeCount++;
+
+            int i;
+            #pragma omp parallel private(i)
+            {
+                #pragma omp for
+                for(int i = 0; i < indSet.size(); i++){
+                    if(misTemp[i] == -1) {
+                        removeCount++;
+                    }
                 }
             }
 
