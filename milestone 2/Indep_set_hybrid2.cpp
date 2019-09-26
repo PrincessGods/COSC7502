@@ -105,7 +105,7 @@ int initSharedMisTemp(int removeInt){
       printf("Attribute MPI_WIN_MODEL not defined\n");
     } else {
         if (MPI_WIN_UNIFIED == *model) {
-            if (myrank == 0) printf("Memory model is MPI_WIN_UNIFIED\n");
+            //Debug log if (myrank == 0) printf("Memory model is MPI_WIN_UNIFIED\n");
         } else {
             if (myrank == 0) printf("Memory model is *not* MPI_WIN_UNIFIED\n");
             MPI_Finalize();
@@ -193,6 +193,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     if(myrank != 0){
         MPI_Irecv(&recvMark, 1, MPI_INT, myrank-1, myrank-1, comm, &Rrequests[myrank-1]);
         MPI_Wait(&Rrequests[myrank-1], &status[0]);
+        cout << "fk: " << myrank << '\n';
     }
     
     #pragma omp parallel
