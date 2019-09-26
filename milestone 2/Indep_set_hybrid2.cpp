@@ -220,7 +220,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         int i;
         #pragma omp parallel private(i)
         {
-            #pragma omp for schedule(dynamic, mysize) reduction (+: indSetMaxSize)
+            #pragma omp for schedule(dynamic) reduction (+: indSetMaxSize)
             for(i = 0; i < indSet.size(); i++){
                 if(misTemp[i] != -1) {
                     indSetMaxSize++;
@@ -274,7 +274,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             int i;
             #pragma omp parallel private(i)
             {
-                #pragma omp for schedule(dynamic, mysize) reduction (+: removeCount)
+                #pragma omp for schedule(dynamic) reduction (+: removeCount)
                 for(i = 0; i < indSet.size(); i++){
                     if(misTemp[i] == -1) {
                         removeCount++;
