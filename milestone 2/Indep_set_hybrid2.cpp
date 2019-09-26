@@ -193,7 +193,6 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     if(myrank != 0){
         MPI_Irecv(&recvMark, 1, MPI_INT, myrank-1, myrank-1, comm, &Rrequests[myrank-1]);
         MPI_Wait(&Rrequests[myrank-1], &status[0]);
-        cout << "fk: " << myrank << '\n';
     }
     
     #pragma omp parallel
@@ -208,6 +207,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             }
         }
     }
+    cout << "fk: " << myrank << '\n';
 
     if(myrank != mysize - 1){
         recvMark = 1;
