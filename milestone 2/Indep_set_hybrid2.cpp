@@ -217,9 +217,13 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     cout << "fk: " << myrank << '\n';
     int indSetMaxSize = 0;
     if(myrank == 0){
-        for(int i = 0; i < indSet.size(); i++){
-            if(misTemp[i] != -1) {
-                indSetMaxSize++;
+        #pragma omp parallel private(indSetMaxSize)
+        {
+            #pragma omp for
+            for(int i = 0; i < indSet.size(); i++){
+                if(misTemp[i] != -1) {
+                    indSetMaxSize++;
+                }
             }
         }
     }
