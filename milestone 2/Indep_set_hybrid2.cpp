@@ -218,7 +218,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     int indSetMaxSize = 0;
     if(myrank == 0){
         int i;
-        #pragma omp parallel private(i)
+        #pragma omp parallel
         {
             #pragma omp for reduction (+: indSetMaxSize)
             for(i = 0; i < indSet.size(); i++){
@@ -272,7 +272,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             MPI_Barrier(comm);
             cout << "fk2: " << myrank << '\n';
             int i;
-            #pragma omp parallel private(i)
+            #pragma omp parallel
             {
                 #pragma omp for reduction (+: removeCount)
                 for(i = 0; i < indSet.size(); i++){
