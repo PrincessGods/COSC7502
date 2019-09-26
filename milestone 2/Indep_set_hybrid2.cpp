@@ -295,12 +295,17 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     }
 
     if(myrank == 0){
-        for(int i = 0; i < indSet.size(); i++){
-            if(misTemp[i] != -1) {
-                indSetMax.push_back(misTemp[i]);
+        int i;
+        #pragma omp parallel private(i)
+        {
+            #pragma omp for
+            for(i = 0; i < indSet.size(); i++){
+                if(misTemp[i] != -1) {
+                    indSetMax.push_back(misTemp[i]);
+                }
             }
         }
-
+        
         for(it = indSetMax.begin(); it != indSetMax.end(); ++it) {
             result += to_string(*it) + " ";
         }
