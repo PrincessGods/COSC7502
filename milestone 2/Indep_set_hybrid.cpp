@@ -101,7 +101,8 @@ int findMinCover(map<int, list<int> > graph) {
 }
 
 /* find the maximum independent set */
-void findMaxIndSet(map<int, list<int> > graph, char* input, char* output) {
+void findMaxIndSet(map<int, list<int> > graph, 
+                char* input, char* output) {
     map<int, list<int> >::iterator itr;
     list<int> :: iterator it; 
     list<int> indSetMax;
