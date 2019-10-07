@@ -196,7 +196,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     }
     
     set <int, greater <int> > removeSet;
-    cout << "fk: " << '\n';
+    cout << "fk: " << myrank << '\n';
     #pragma omp parallel
     {   
         #pragma omp for
