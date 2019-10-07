@@ -222,12 +222,12 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         {   
             int i;
             int temMax = 0;
-            #pragma omp for schedule(dynamic)
-            for(i = 0; i < indSet.size(); i++){
-                if(misTemp[i] != -1) {
-                    temMax += 1;
+                #pragma omp for
+                for(i = 0; i < indSet.size(); i++){
+                    if(misTemp[i] != -1) {
+                        temMax += 1;
+                    }
                 }
-            }
 
             #pragma omp critical
             {
@@ -283,12 +283,12 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             {   
                 int i;
                 int temRmCount = 0;
-                #pragma omp for schedule(dynamic)
-                for(i = 0; i < indSet.size(); i++){
-                    if(misTemp[i] == -1) {
-                        temRmCount += 1;
+                    #pragma omp for
+                    for(i = 0; i < indSet.size(); i++){
+                        if(misTemp[i] == -1) {
+                            temRmCount += 1;
+                        }
                     }
-                }
 
                 #pragma omp critical
                 {
