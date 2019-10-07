@@ -194,14 +194,12 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         MPI_Irecv(&recvMark, 1, MPI_INT, myrank-1, myrank-1, comm, &Rrequests[myrank-1]);
         MPI_Wait(&Rrequests[myrank-1], &status[0]);
     }
-    
-    set <int, greater <int> > removeSet;
-    
+
     for(int i = begin; i < end; i++){
         auto key = graph.find(misTemp[i]);
         if(key != graph.end()){
             for (int v:key->second){
-                removeSet.insert(misTemp[v]);
+                misTemp[v] = -1;
             }
         }
     }
@@ -213,20 +211,12 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
 
     MPI_Barrier(comm);
     
-    int allRmSetSize;
-    int rmSetSize = removeSet.size();
-    MPI_Allreduce (&rmSetSize, &allRmSetSize, 1, MPI_DOUBLE, MPI_SUM, comm);
-    cout << "fk: " << rmSetSize << '\n';
-    
     int indSetMaxSize = 0;
     if(myrank == 0){
-        int setCount = 0;
-        for(int i:removeSet){
-            if(misTemp[setCount] == i) {
-                misTemp[setCount] = -1;
+        for(int i = 0; i < indSet.size(); i++){
+            if(misTemp[i] != -1) {
                 indSetMaxSize += 1;
             }
-            setCount ++;
         }
 
 
@@ -271,16 +261,11 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
                 MPI_Wait(&Rrequests[myrank-1], &status[0]);
             }
 
-            #pragma omp parallel
-            {   
-                int ompSize = omp_get_num_threads();
-                #pragma omp for schedule(dynamic, ompSize)
-                for(int i = begin; i < end; i++){
-                    auto key = graph.find(misTemp[i]);
-                    if(key != graph.end()){
-                        for (int v:key->second){
-                            misTemp[v] = -1;
-                        }
+            for(int i = begin; i < end; i++){
+                auto key = graph.find(misTemp[i]);
+                if(key != graph.end()){
+                    for (int v:key->second){
+                        misTemp[v] = -1;
                     }
                 }
             }
