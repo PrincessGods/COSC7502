@@ -286,7 +286,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
                 #pragma omp for
                 for(i = 0; i < indSet.size(); i++){
                     if(misTemp[i] == -1) {
-                        temRmCount++;
+                        temRmCount += 1;
                     }
                 }
 
