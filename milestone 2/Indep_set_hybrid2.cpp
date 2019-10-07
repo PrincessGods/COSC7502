@@ -275,7 +275,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             #pragma omp parallel
             {   
                 int ompSize = omp_get_num_threads();
-                #pragma omp for schedule(auto) ORDERED
+                #pragma omp for schedule(dynamic, ompSize)
                 for(int i = begin; i < end; i++){
                     auto key = graph.find(misTemp[i]);
                     if(key != graph.end()){
