@@ -215,7 +215,6 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     if(myrank == 0){
         #pragma omp parallel
         {   
-            cout << "removeCount: " << omp_get_num_threads() << '\n';
             int i;
             int temMax = 0;
                 #pragma omp for
