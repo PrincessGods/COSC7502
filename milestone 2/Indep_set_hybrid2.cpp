@@ -218,29 +218,29 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     
     int indSetMaxSize = 0;
     if(myrank == 0){
-        for(int i = 0; i < indSet.size(); i++){
-            if(misTemp[i] != -1) {
-                indSetMaxSize += 1;
-            }
-        }
-
-
-        // #pragma omp parallel
-        // {   
-        //     int i;
-        //     int temMax = 0;
-        //         #pragma omp for
-        //         for(i = 0; i < indSet.size(); i++){
-        //             if(misTemp[i] != -1) {
-        //                 temMax += 1;
-        //             }
-        //         }
-
-        //     #pragma omp critical
-        //     {
-        //         indSetMaxSize += temMax;
+        // for(int i = 0; i < indSet.size(); i++){
+        //     if(misTemp[i] != -1) {
+        //         indSetMaxSize += 1;
         //     }
         // }
+
+
+        #pragma omp parallel
+        {   
+            int i;
+            int temMax = 0;
+                #pragma omp for
+                for(i = 0; i < indSet.size(); i++){
+                    if(misTemp[i] != -1) {
+                        temMax += 1;
+                    }
+                }
+
+            #pragma omp critical
+            {
+                indSetMaxSize += temMax;
+            }
+        }
         
     }
     MPI_Bcast(&indSetMaxSize, mysize, MPI_INT, root, comm);
@@ -287,28 +287,28 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             
             MPI_Barrier(comm);
             
-            for(int i = 0; i < indSet.size(); i++){
-                if(misTemp[i] == -1) {
-                    removeCount += 1;
-                }
-            }
-
-            // #pragma omp parallel
-            // {   
-            //     int i;
-            //     int temRmCount = 0;
-            //         #pragma omp for
-            //         for(i = 0; i < indSet.size(); i++){
-            //             if(misTemp[i] == -1) {
-            //                 temRmCount += 1;
-            //             }
-            //         }
-
-            //     #pragma omp critical
-            //     {
-            //         removeCount += temRmCount;
+            // for(int i = 0; i < indSet.size(); i++){
+            //     if(misTemp[i] == -1) {
+            //         removeCount += 1;
             //     }
             // }
+
+            #pragma omp parallel
+            {   
+                int i;
+                int temRmCount = 0;
+                    #pragma omp for
+                    for(i = 0; i < indSet.size(); i++){
+                        if(misTemp[i] == -1) {
+                            temRmCount += 1;
+                        }
+                    }
+
+                #pragma omp critical
+                {
+                    removeCount += temRmCount;
+                }
+            }
             cout << "removeCount: " << removeCount << '\n';
             if(indSetMaxSize < indSet.size() - removeCount){
                 indSetMaxSize = indSet.size() - removeCount;
