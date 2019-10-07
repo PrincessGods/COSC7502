@@ -213,7 +213,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     
     int indSetMaxSize = 0;
     if(myrank == 0){
-        for(i = 0; i < indSet.size(); i++){
+        for(int i = 0; i < indSet.size(); i++){
             if(misTemp[i] != -1) {
                 indSetMaxSize += 1;
             }
@@ -275,7 +275,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             
             MPI_Barrier(comm);
             
-            for(i = 0; i < indSet.size(); i++){
+            for(int i = 0; i < indSet.size(); i++){
                 if(misTemp[i] == -1) {
                     removeCount += 1;
                 }
