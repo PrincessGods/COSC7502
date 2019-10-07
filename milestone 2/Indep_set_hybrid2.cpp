@@ -195,15 +195,15 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         MPI_Wait(&Rrequests[myrank-1], &status[0]);
     }
     
+    set <int, greater <int> > removeSet;
     #pragma omp parallel
     {   
-        int ompSize = omp_get_num_threads();
-        #pragma omp for schedule(auto) ORDERED
+        #pragma omp for
         for(int i = begin; i < end; i++){
             auto key = graph.find(misTemp[i]);
             if(key != graph.end()){
                 for (int v:key->second){
-                    misTemp[v] = -1;
+                    removeSet.insert(misTemp[v]);
                 }
             }
         }
@@ -215,13 +215,19 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     }
 
     MPI_Barrier(comm);
+    int allRmSetSize;
+    int rmSetSize = removeSet.size();
+    MPI_Allreduce (&rmSetSize, &allRmSetSize, 1, MPI_DOUBLE, MPI_SUM, comm);
     
     int indSetMaxSize = 0;
     if(myrank == 0){
-        for(int i = 0; i < indSet.size(); i++){
-            if(misTemp[i] != -1) {
+        int setCount = 0;
+        for(int i:removeSet){
+            if(misTemp[setCount] == i) {
+                misTemp[setCount] = -1;
                 indSetMaxSize += 1;
             }
+            setCount ++;
         }
 
 
