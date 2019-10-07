@@ -105,7 +105,7 @@ int initSharedMisTemp(int removeInt){
       printf("Attribute MPI_WIN_MODEL not defined\n");
     } else {
         if (MPI_WIN_UNIFIED == *model) {
-            //Debug log if (myrank == 0) printf("Memory model is MPI_WIN_UNIFIED\n");
+            if (myrank == 0) printf("Memory model is MPI_WIN_UNIFIED\n");
         } else {
             if (myrank == 0) printf("Memory model is *not* MPI_WIN_UNIFIED\n");
             MPI_Finalize();
@@ -217,9 +217,10 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     
     int indSetMaxSize = 0;
     if(myrank == 0){
-        int i;
-        #pragma omp parallel private(i)
-        {
+        
+        #pragma omp parallel
+        {   
+            int i;
             #pragma omp for reduction (+: indSetMaxSize)
             for(i = 0; i < indSet.size(); i++){
                 if(misTemp[i] != -1) {
@@ -227,9 +228,10 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
                 }
             }
         }
+        
     }
     MPI_Bcast(&indSetMaxSize, mysize, MPI_INT, root, comm);
-    cout << "indSetMaxSize: " << indSetMaxSize << '\n';
+    
     while(indSetMaxSize < maxSize && indSet.size() > 1){
         int arrIndex = 0;
         for(it = indSet.begin(); it != indSet.end(); ++it) {
@@ -271,9 +273,9 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
 
             MPI_Barrier(comm);
             
-            int i;
-            #pragma omp parallel private(i)
-            {
+            #pragma omp parallel
+            {   
+                int i;
                 #pragma omp for reduction (+: removeCount)
                 for(i = 0; i < indSet.size(); i++){
                     if(misTemp[i] == -1) {
@@ -281,7 +283,8 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
                     }
                 }
             }
-            cout << "removeCount: " << removeCount << '\n';
+            
+
             if(indSetMaxSize < indSet.size() - removeCount){
                 indSetMaxSize = indSet.size() - removeCount;
             }
