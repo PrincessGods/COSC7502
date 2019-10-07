@@ -231,7 +231,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         
     }
     MPI_Bcast(&indSetMaxSize, mysize, MPI_INT, root, comm);
-    
+    cout << "indSetMaxSize: " << indSetMaxSize << '\n';
     while(indSetMaxSize < maxSize && indSet.size() > 1){
         int arrIndex = 0;
         for(it = indSet.begin(); it != indSet.end(); ++it) {
@@ -270,7 +270,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
                 recvMark = 1;
                 MPI_Isend(&recvMark, 1, MPI_INT, myrank+1, myrank, comm, &Srequests[myrank]);
             }
-
+            
             MPI_Barrier(comm);
             
             #pragma omp parallel
@@ -283,8 +283,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
                     }
                 }
             }
-            
-
+            cout << "removeCount: " << removeCount << '\n';
             if(indSetMaxSize < indSet.size() - removeCount){
                 indSetMaxSize = indSet.size() - removeCount;
             }
