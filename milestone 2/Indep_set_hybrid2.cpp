@@ -222,16 +222,16 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         {   
             int i;
             int temMax = 0;
-            #pragma omp for
+            #pragma omp for schedule(static)
             for(i = 0; i < indSet.size(); i++){
                 if(misTemp[i] != -1) {
                     temMax += 1;
                 }
+            }
 
-                #pragma omp critical
-                {
-                    indSetMaxSize += temMax;
-                }
+            #pragma omp critical
+            {
+                indSetMaxSize += temMax;
             }
         }
         
@@ -283,19 +283,17 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             {   
                 int i;
                 int temRmCount = 0;
-                #pragma omp for
+                #pragma omp for schedule(static)
                 for(i = 0; i < indSet.size(); i++){
                     if(misTemp[i] == -1) {
                         temRmCount += 1;
                     }
-
-                    #pragma omp critical
-                    {
-                        removeCount += temRmCount;
-                    }
                 }
 
-                
+                #pragma omp critical
+                {
+                    removeCount += temRmCount;
+                }
             }
             cout << "removeCount: " << removeCount << '\n';
             if(indSetMaxSize < indSet.size() - removeCount){
