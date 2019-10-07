@@ -175,9 +175,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     /* calculate size of MIS */
     int maxSize;
     if(myrank == 0){
-        cout << "test1: " << '\n';
         maxSize = indSet.size() - findMinCover(graph);
-        cout << "test2: " << '\n';
     }
     MPI_Bcast(&maxSize, mysize, MPI_INT, root, comm);
     
@@ -223,11 +221,17 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         #pragma omp parallel
         {   
             int i;
-            #pragma omp for reduction (+: indSetMaxSize)
+            int temMax = 0;
+            #pragma omp for
             for(i = 0; i < indSet.size(); i++){
                 if(misTemp[i] != -1) {
-                    indSetMaxSize++;
+                    temMax++;
                 }
+            }
+
+            #pragma omp critical
+            {
+                indSetMaxSize += temMax;
             }
         }
         
@@ -278,11 +282,17 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             #pragma omp parallel
             {   
                 int i;
-                #pragma omp for reduction (+: removeCount)
+                int temRmCount = 0;
+                #pragma omp for
                 for(i = 0; i < indSet.size(); i++){
                     if(misTemp[i] == -1) {
-                        removeCount++;
+                        temRmCount++;
                     }
+                }
+
+                #pragma omp critical
+                {
+                    removeCount += temRmCount;
                 }
             }
             cout << "removeCount: " << removeCount << '\n';
