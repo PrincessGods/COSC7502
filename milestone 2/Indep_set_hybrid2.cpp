@@ -196,6 +196,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     }
     
     set <int, greater <int> > removeSet;
+    cout << "fk: " << '\n';
     #pragma omp parallel
     {   
         #pragma omp for
@@ -215,7 +216,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     }
 
     MPI_Barrier(comm);
-cout << "fk: " << '\n';
+    
     int allRmSetSize;
     int rmSetSize = removeSet.size();
     MPI_Allreduce (&rmSetSize, &allRmSetSize, 1, MPI_DOUBLE, MPI_SUM, comm);
