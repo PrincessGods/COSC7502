@@ -197,15 +197,11 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     
     set <int, greater <int> > removeSet;
     cout << "fk: " << myrank << '\n';
-    #pragma omp parallel
-    {   
-        #pragma omp for
-        for(int i = begin; i < end; i++){
-            auto key = graph.find(misTemp[i]);
-            if(key != graph.end()){
-                for (int v:key->second){
-                    removeSet.insert(misTemp[v]);
-                }
+    for(int i = begin; i < end; i++){
+        auto key = graph.find(misTemp[i]);
+        if(key != graph.end()){
+            for (int v:key->second){
+                removeSet.insert(misTemp[v]);
             }
         }
     }
