@@ -175,7 +175,9 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     /* calculate size of MIS */
     int maxSize;
     if(myrank == 0){
+        cout << "test1: " << '\n';
         maxSize = indSet.size() - findMinCover(graph);
+        cout << "test2: " << '\n';
     }
     MPI_Bcast(&maxSize, mysize, MPI_INT, root, comm);
     
