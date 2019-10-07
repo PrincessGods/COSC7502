@@ -196,7 +196,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     }
     
     set <int, greater <int> > removeSet;
-    cout << "fk: " << myrank << '\n';
+    
     for(int i = begin; i < end; i++){
         auto key = graph.find(misTemp[i]);
         if(key != graph.end()){
@@ -216,6 +216,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     int allRmSetSize;
     int rmSetSize = removeSet.size();
     MPI_Allreduce (&rmSetSize, &allRmSetSize, 1, MPI_DOUBLE, MPI_SUM, comm);
+    cout << "fk: " << allRmSetSize << '\n';
     
     int indSetMaxSize = 0;
     if(myrank == 0){
