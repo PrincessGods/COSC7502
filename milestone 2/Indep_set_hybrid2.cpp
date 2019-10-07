@@ -215,6 +215,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     if(myrank == 0){
         #pragma omp parallel
         {   
+            cout << "removeCount: " << omp_get_num_threads() << '\n';
             int i;
             int temMax = 0;
                 #pragma omp for
@@ -232,7 +233,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         
     }
     MPI_Bcast(&indSetMaxSize, mysize, MPI_INT, root, comm);
-    cout << "indSetMaxSize: " << indSetMaxSize << '\n';
+    
     while(indSetMaxSize < maxSize && indSet.size() > 1){
         int arrIndex = 0;
         for(it = indSet.begin(); it != indSet.end(); ++it) {
@@ -286,7 +287,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
                     removeCount += temRmCount;
                 }
             }
-            cout << "removeCount: " << removeCount << '\n';
+            
             if(indSetMaxSize < indSet.size() - removeCount){
                 indSetMaxSize = indSet.size() - removeCount;
             }
