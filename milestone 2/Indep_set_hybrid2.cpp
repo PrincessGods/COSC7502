@@ -228,7 +228,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
                     temMax += 1;
                 }
             }
-
+            #pragma omp barrier
             #pragma omp critical
             {
                 indSetMaxSize += temMax;
@@ -289,7 +289,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
                         temRmCount += 1;
                     }
                 }
-
+                #pragma omp barrier
                 #pragma omp critical
                 {
                     removeCount += temRmCount;
