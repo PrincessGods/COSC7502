@@ -180,22 +180,28 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     MPI_Bcast(&maxSize, mysize, MPI_INT, root, comm);
     
     /* find MIS */
-    initSharedMisTemp(-1);
-    int index = indSet.size()/mysize;
-    int begin = myrank * index;
-    int end = indSet.size();
-
-    if(myrank != mysize - 1){
-        end = begin + index;
+    int arrIndex = 0;
+    for (it = indSet.begin(); it != indSet.end(); ++it) {
+        misTemp[arrIndex] = *it;
+        arrIndex ++;
     }
 
-    int recvMark;
-    if(myrank != 0){
-        MPI_Irecv(&recvMark, 1, MPI_INT, myrank-1, myrank-1, comm, &Rrequests[myrank-1]);
-        MPI_Wait(&Rrequests[myrank-1], &status[0]);
-    }
+    // initSharedMisTemp(-1);
+    // int index = indSet.size()/mysize;
+    // int begin = myrank * index;
+    // int end = indSet.size();
 
-    for(int i = begin; i < end; i++){
+    // if(myrank != mysize - 1){
+    //     end = begin + index;
+    // }
+
+    // int recvMark;
+    // if(myrank != 0){
+    //     MPI_Irecv(&recvMark, 1, MPI_INT, myrank-1, myrank-1, comm, &Rrequests[myrank-1]);
+    //     MPI_Wait(&Rrequests[myrank-1], &status[0]);
+    // }
+
+    for(int i = 0; i < indSet.size(); i++){
         auto key = graph.find(misTemp[i]);
         if(key != graph.end()){
             for (int v:key->second){
@@ -204,10 +210,10 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         }
     }
 
-    if(myrank != mysize - 1){
-        recvMark = 1;
-        MPI_Isend(&recvMark, 1, MPI_INT, myrank+1, myrank, comm, &Srequests[myrank]);
-    }
+    // if(myrank != mysize - 1){
+    //     recvMark = 1;
+    //     MPI_Isend(&recvMark, 1, MPI_INT, myrank+1, myrank, comm, &Srequests[myrank]);
+    // }
 
     MPI_Barrier(comm);
     
