@@ -188,9 +188,9 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     }
 
     // initSharedMisTemp(-1);
-    // int index = indSet.size()/mysize;
-    // int begin = myrank * index;
-    // int end = indSet.size();
+    int index = indSet.size()/mysize;
+    int begin = myrank * index;
+    int end = indSet.size();
 
     // if(myrank != mysize - 1){
     //     end = begin + index;
