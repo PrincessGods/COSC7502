@@ -180,34 +180,41 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     MPI_Bcast(&maxSize, mysize, MPI_INT, root, comm);
     
     /* find MIS */
-    initSharedMisTemp(-1);
+    int arrIndex = 0;
+    int misTemp2[indSet.size()];
+    for (it = indSet.begin(); it != indSet.end(); ++it) {
+        misTemp2[arrIndex] = *it;
+        arrIndex ++;
+    }
+
+    // initSharedMisTemp(-1);
     int index = indSet.size()/mysize;
     int begin = myrank * index;
     int end = indSet.size();
 
-    if(myrank != mysize - 1){
-        end = begin + index;
-    }
+    // if(myrank != mysize - 1){
+    //     end = begin + index;
+    // }
 
-    int recvMark;
-    if(myrank != 0){
-        MPI_Irecv(&recvMark, 1, MPI_INT, myrank-1, myrank-1, comm, &Rrequests[myrank-1]);
-        MPI_Wait(&Rrequests[myrank-1], &status[0]);
-    }
-    
-    for(int i = begin; i < end; i++){
-        auto key = graph.find(misTemp[i]);
+    // int recvMark;
+    // if(myrank != 0){
+    //     MPI_Irecv(&recvMark, 1, MPI_INT, myrank-1, myrank-1, comm, &Rrequests[myrank-1]);
+    //     MPI_Wait(&Rrequests[myrank-1], &status[0]);
+    // }
+
+    for(int i = 0; i < indSet.size(); i++){
+        auto key = graph.find(misTemp2[i]);
         if(key != graph.end()){
             for (int v:key->second){
-                misTemp[v] = -1;
+                misTemp2[v] = -1;
             }
         }
     }
 
-    if(myrank != mysize - 1){
-        recvMark = 1;
-        MPI_Isend(&recvMark, 1, MPI_INT, myrank+1, myrank, comm, &Srequests[myrank]);
-    }
+    // if(myrank != mysize - 1){
+    //     recvMark = 1;
+    //     MPI_Isend(&recvMark, 1, MPI_INT, myrank+1, myrank, comm, &Srequests[myrank]);
+    // }
 
     MPI_Barrier(comm);
     
@@ -220,7 +227,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             int temMax = 0;
                 #pragma omp for
                 for(i = 0; i < indSet.size(); i++){
-                    if(misTemp[i] != -1) {
+                    if(misTemp2[i] != -1) {
                         temMax += 1;
                     }
                 }
