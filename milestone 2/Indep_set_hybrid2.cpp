@@ -216,12 +216,12 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         
         #pragma omp parallel
         {   
-            printf("Hello from thread %d of %d!\n", omp_get_thread_num(), omp_get_num_threads());
             int i;
             int temMax = 0;
                 #pragma omp for
                 for(i = 0; i < indSet.size(); i++){
                     if(misTemp[i] != -1) {
+                        printf("Hello from thread %d of %d!\n", omp_get_thread_num(), omp_get_num_threads());
                         temMax += 1;
                     }
                 }
