@@ -181,8 +181,9 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     
     /* find MIS */
     int arrIndex = 0;
+    int misTemp2[indSet.size()];
     for (it = indSet.begin(); it != indSet.end(); ++it) {
-        misTemp[arrIndex] = *it;
+        misTemp2[arrIndex] = *it;
         arrIndex ++;
     }
 
@@ -202,10 +203,10 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     // }
 
     for(int i = 0; i < indSet.size(); i++){
-        auto key = graph.find(misTemp[i]);
+        auto key = graph.find(misTemp2[i]);
         if(key != graph.end()){
             for (int v:key->second){
-                misTemp[v] = -1;
+                misTemp2[v] = -1;
             }
         }
     }
@@ -226,7 +227,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             int temMax = 0;
                 #pragma omp for
                 for(i = 0; i < indSet.size(); i++){
-                    if(misTemp[i] != -1) {
+                    if(misTemp2[i] != -1) {
                         temMax += 1;
                     }
                 }
