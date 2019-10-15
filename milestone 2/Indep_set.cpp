@@ -135,7 +135,6 @@ string read_line(FILE* file){
 
             if(indSetMax.size() < misTemp.size()){
                 indSetMax = misTemp;
-                
             }
 
             if(indSetMax.size() == maxSize){
@@ -144,6 +143,8 @@ string read_line(FILE* file){
         }
         
         indSet.remove(*indSet.begin());
+        currentSize = indSetMax.size();
+        indSize = indSet.size();
     }
 
     for(it = indSetMax.begin(); it != indSetMax.end(); ++it) {
