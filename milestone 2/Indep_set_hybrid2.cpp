@@ -196,7 +196,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     }
     
     if(myrank == 0){
-        for(int i = begin; i < end; i++){
+        for(int i = 0; i < indSet.size(); i++){
             cout << "myrank: " << myrank << " - " << i << '\n';
             auto key = graph.find(misTemp[i]);
             if(key != graph.end()){
