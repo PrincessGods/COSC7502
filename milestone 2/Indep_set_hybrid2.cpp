@@ -185,9 +185,9 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     int begin = myrank * index;
     int end = indSet.size();
 
-    // if(myrank != mysize - 1){
-    //     end = begin + index;
-    // }
+    if(myrank != mysize - 1){
+        end = begin + index;
+    }
 
     int recvMark;
     if(myrank != 0){
@@ -195,14 +195,11 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         MPI_Wait(&Rrequests[myrank-1], &status[0]);
     }
     
-    if(myrank == 0){
-        for(int i = 0; i < end; i++){
-            cout << "myrank: " << myrank << " - " << i << '\n';
-            auto key = graph.find(misTemp[i]);
-            if(key != graph.end()){
-                for (int v:key->second){
-                    misTemp[v] = -1;
-                }
+    for(int i = begin; i < end; i++){
+        auto key = graph.find(misTemp[i]);
+        if(key != graph.end()){
+            for (int v:key->second){
+                misTemp[v] = -1;
             }
         }
     }
@@ -216,13 +213,13 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     
     int indSetMaxSize = 0;
     if(myrank == 0){
-        
+        int n = indSet.size();
         #pragma omp parallel
         {   
             int i;
             int temMax = 0;
                 #pragma omp for
-                for(i = 0; i < indSet.size(); i++){
+                for(i = 0; i < n; i++){
                     if(misTemp[i] != -1) {
                         temMax += 1;
                     }
@@ -274,13 +271,13 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
             }
             
             MPI_Barrier(comm);
-            
+            int n = indSet.size();
             #pragma omp parallel
             {   
                 int i;
                 int temRmCount = 0;
                     #pragma omp for
-                    for(i = 0; i < indSet.size(); i++){
+                    for(i = 0; i < n; i++){
                         if(misTemp[i] == -1) {
                             temRmCount += 1;
                         }
@@ -306,10 +303,11 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
 
     if(myrank == 0){
         int i;
+        int n = indSet.size();
         #pragma omp parallel private(i)
         {
             #pragma omp for schedule(static)
-            for(i = 0; i < indSet.size(); i++){
+            for(i = 0; i < n; i++){
                 if(misTemp[i] != -1) {
                     indSetMax.push_back(misTemp[i]);
                 }
