@@ -195,13 +195,12 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         MPI_Wait(&Rrequests[myrank-1], &status[0]);
     }
     
-    if(myrank == 0){
-        for(int i = begin; i < end; i++){
-            auto key = graph.find(misTemp[i]);
-            if(key != graph.end()){
-                for (int v:key->second){
-                    misTemp[v] = -1;
-                }
+    for(int i = begin; i < end; i++){
+        cout << "myrank: " << myrank << " - " << i << '\n';
+        auto key = graph.find(misTemp[i]);
+        if(key != graph.end()){
+            for (int v:key->second){
+                misTemp[v] = -1;
             }
         }
     }
