@@ -140,7 +140,6 @@ int findMinCover(map<int, list<int>> graph) {
     list<int> :: iterator it;
 
     map<int, list<int> > temGraph = graph;
-    int minCover = 0;
     set <int, greater <int> > markedCover;
     
     for (itr = temGraph.begin(); itr != temGraph.end(); ++itr) { 
@@ -214,7 +213,6 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
     int indSetMaxSize = 0;
     if(myrank == 0){
         int n = indSet.size();
-        cout << "n: " << n << '\n';
         #pragma omp parallel
         {   
             int i;
@@ -233,6 +231,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         }
         
     }
+
     MPI_Bcast(&indSetMaxSize, mysize, MPI_INT, root, comm);
     cout << "indSetMaxSize: " << indSetMaxSize << '\n';
 

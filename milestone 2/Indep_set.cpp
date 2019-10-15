@@ -70,8 +70,7 @@ string read_line(FILE* file){
         }
     }
 
-    map<int, list<int>>::iterator itr; 
-    map<int, list<int>>::iterator itr2;
+    map<int, list<int>>::iterator itr;
     list<int> :: iterator it; 
 
     /* printing map */ 
@@ -88,20 +87,26 @@ string read_line(FILE* file){
     // cout << endl;
 
     /* calculate size of MIS */
-    map<int, list<int>> temGraph = graph;
-    int minCover = 0;
-
+    map<int, list<int> > temGraph = graph;
+    set <int, greater <int> > markedCover;
+    
     for (itr = temGraph.begin(); itr != temGraph.end(); ++itr) { 
         for(it = itr->second.begin(); it != itr->second.end(); ++it) {
             auto key = temGraph.find(*it);
-            if(key->second.size() > 1){
+            if(key->second.size() > 1 &&
+                *it != -1){
                 key->second.clear();
-                minCover ++;
+                markedCover.insert(*it);
+            } else if(key->second.size() == 1 &&
+                        *it != -1){
+                if(markedCover.find(*it) == markedCover.end()) {
+                    markedCover.insert(itr->first);
+                } 
             }
         }
     }
     
-    int maxSize = indSet.size() - minCover;
+    int maxSize = indSet.size() - markedCover.size();
 
     /* find MIS */
     list<int> misTemp = indSet;
@@ -113,7 +118,9 @@ string read_line(FILE* file){
     }
     indSetMax = misTemp;
 
-    while(indSetMax.size() < maxSize && indSet.size() > 1){
+    int currentSize = indSetMax.size();
+    int indSize = indSet.size();
+    while(currentSize < maxSize && indSize > 1){
         for(it = indSetMax.begin(); it != indSetMax.end(); ++it) {
             misTemp = indSet;
             misTemp.remove(*it);
