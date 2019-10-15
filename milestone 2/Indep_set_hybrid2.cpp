@@ -216,7 +216,7 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         int n = indSet.size();
         for(int i = 0; i < n; i++){
             if(misTemp[i] != -1) {
-                temMax += 1;
+                indSetMaxSize += 1;
             }
         }
 
