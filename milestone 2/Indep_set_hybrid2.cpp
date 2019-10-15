@@ -189,25 +189,27 @@ void findMaxIndSet(map<int, list<int>> graph, char* input, char* output) {
         end = begin + index;
     }
 
-    int recvMark;
-    if(myrank != 0){
-        MPI_Irecv(&recvMark, 1, MPI_INT, myrank-1, myrank-1, comm, &Rrequests[myrank-1]);
-        MPI_Wait(&Rrequests[myrank-1], &status[0]);
-    }
+    // int recvMark;
+    // if(myrank != 0){
+    //     MPI_Irecv(&recvMark, 1, MPI_INT, myrank-1, myrank-1, comm, &Rrequests[myrank-1]);
+    //     MPI_Wait(&Rrequests[myrank-1], &status[0]);
+    // }
     
-    for(int i = begin; i < end; i++){
-        auto key = graph.find(misTemp[i]);
-        if(key != graph.end()){
-            for (int v:key->second){
-                misTemp[v] = -1;
+    if(myrank == 0){
+        for(int i = begin; i < end; i++){
+            auto key = graph.find(misTemp[i]);
+            if(key != graph.end()){
+                for (int v:key->second){
+                    misTemp[v] = -1;
+                }
             }
         }
     }
 
-    if(myrank != mysize - 1){
-        recvMark = 1;
-        MPI_Isend(&recvMark, 1, MPI_INT, myrank+1, myrank, comm, &Srequests[myrank]);
-    }
+    // if(myrank != mysize - 1){
+    //     recvMark = 1;
+    //     MPI_Isend(&recvMark, 1, MPI_INT, myrank+1, myrank, comm, &Srequests[myrank]);
+    // }
 
     MPI_Barrier(comm);
     
