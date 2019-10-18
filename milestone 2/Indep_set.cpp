@@ -8,8 +8,8 @@
 #include <sstream> 
 #include <iterator> 
 #include <map>
-#include <list> 
 #include <set> 
+#include <list> 
 
 using namespace std; 
 
@@ -119,9 +119,7 @@ string read_line(FILE* file){
     }
     indSetMax = misTemp;
 
-    int currentSize = indSetMax.size();
-    int indSize = indSet.size();
-    while(currentSize < maxSize && indSize > 1){
+    while(indSetMax.size() < maxSize && indSet.size() > 1){
         for(it = indSetMax.begin(); it != indSetMax.end(); ++it) {
             misTemp = indSet;
             misTemp.remove(*it);
@@ -135,6 +133,7 @@ string read_line(FILE* file){
 
             if(indSetMax.size() < misTemp.size()){
                 indSetMax = misTemp;
+                
             }
 
             if(indSetMax.size() == maxSize){
@@ -143,8 +142,6 @@ string read_line(FILE* file){
         }
         
         indSet.remove(*indSet.begin());
-        currentSize = indSetMax.size();
-        indSize = indSet.size();
     }
 
     for(it = indSetMax.begin(); it != indSetMax.end(); ++it) {
