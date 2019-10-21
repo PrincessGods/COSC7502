@@ -196,7 +196,7 @@ int findMaxIndSet(map<int, list<int>> graph) {
     int highestRank;
     if(othersSizes == indSize){
         highestRank = myrank;
-        //printf("myrank: %d, size: %d\n", myrank, othersSizes);
+        printf("myrank: %d, size: %d\n", myrank, othersSizes);
     }
 
     free(misTemp);
