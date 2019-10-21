@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --partition=coursework
 #SBATCH --job-name=yo1x1x1x1
-#SBATCH --nodes=4
+#SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=4
