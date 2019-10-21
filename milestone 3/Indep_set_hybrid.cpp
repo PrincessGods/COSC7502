@@ -205,7 +205,7 @@ int findMaxIndSet(map<int, list<int>> graph) {
 }
 
 void writeResult(char* input, char* output){
-    printf("The maximum independent set is: %s\n", result.c_str());
+    //printf("The maximum independent set is: %s\n", result.c_str());
 
     //output file
     FILE* outputFile;
