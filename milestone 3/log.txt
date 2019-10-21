@@ -7,6 +7,6 @@ export OMP_NUM_THREADS=x
 mpicxx -Wall -fopenmp -Wextra -o indset.exe Indep_set.cpp -lm -std=c++11
 time ./indset.exe testfile_in3.txt testfile_out.txt
 mpicxx -Wall -fopenmp -Wextra -o indset_hybrid.exe Indep_set_hybrid.cpp -lm -std=c++11
-time mpirun -n 4 ./indset_hybrid.exe finaltest.txt testfile_out.txt
+time mpirun -n 4 ./indset_hybrid.exe 6.txt testfile_out.txt
 
 echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
